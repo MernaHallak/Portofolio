@@ -67,7 +67,7 @@ const ProjectPage = () => {
                     </p>
                   )}
 
-                  <p className="text-sm text-gray mb-2">{}</p>
+                  {/* <p className="text-sm text-gray mb-2">{}</p> */}
                 </div>
               </div>
               {project.github && (

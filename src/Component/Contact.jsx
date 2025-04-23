@@ -47,11 +47,11 @@ const Contact = () => {
           </div>
         </div>
         <form className="basis-2/4 space-y-6">
-          <div className="flex sm:flex-row flex-col gap-1 ga">
+          <div className="flex sm:flex-row flex-col gap-1 gap-y-6">
             <input
               type="text"
               placeholder="Full name"
-              className=" sm:basis-2/5 w-full border-2 border-gray rounded-lg p-2 outline-none"
+              className=" sm:basis-2/5 w-full border border-gray rounded-lg p-2 outline-none"
             />
 
             <input

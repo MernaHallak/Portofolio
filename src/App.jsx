@@ -4,7 +4,7 @@ import ProjectPage from "./Page/ProjectPage";
 import HomePage from "./Page/HomePage";
 
 function App() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  // const [isDarkMode, setIsDarkMode] = useState(false);
   //  const Image=createContext()
   // const img=[ImageProject,ImageProject,ImageProject,ImageProject,ImageProject,ImageProject]
   return (

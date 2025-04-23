@@ -1,9 +1,7 @@
 import React, { createContext, useState } from "react";
 
-// إنشاء سياق (Context)
 export const ThemeContext = createContext();
 
-// مكوّن الموفر (Provider)
 export const ThemeProvider = ({ children }) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 

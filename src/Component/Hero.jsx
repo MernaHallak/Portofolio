@@ -2,8 +2,14 @@ import squers from "../assets/squers.png";
 import circle from "../assets/Circle.png";
 import image from "../assets/Image.png";
 import bgRadial from "../assets/bg.png";
+import { jsPDF } from "jspdf";
 
 const Hero = ({ isDarkMode }) => {
+  const handleDownload = () => {
+    const doc = new jsPDF();
+    doc.text("PDF", 10, 10);
+    doc.save("ملفي.pdf");
+  };
   return (
     <div>
       <div
@@ -36,6 +42,7 @@ const Hero = ({ isDarkMode }) => {
             </div>
 
             <button
+              onClick={handleDownload}
               className={`${
                 isDarkMode ? "bg-[#7DE0EA] text-white" : "bg-black text-white"
               } px-6 py-3 rounded-md hover:bg-gray-800 transition duration-300 font-bold`}
