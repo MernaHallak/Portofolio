@@ -3,7 +3,7 @@ import { MdArrowOutward } from "react-icons/md";
 import Project from "./Project";
 
 import { projects } from "../constants/projects";
-import ProjectsSlider from "./projectsSlider";
+import ProjectsSlider from "./ProjectsSlider";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
 const Portfolio = ({ isHome }) => {
