@@ -1,6 +1,6 @@
 import squers from "../assets/squers.png";
 import circle from "../assets/Circle.png";
-import profileImage from "../assets/profile-image.jpg";
+import profileImage from "../assets/profile-image.png";
 import bgRadial from "../assets/bg.png";
 import { jsPDF } from "jspdf";
 
