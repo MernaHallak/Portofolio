@@ -12,9 +12,9 @@ const About = ({ skills }) => {
       <div className="basis-1/2 space-y-5 text-center sm:text-start">
         <h1 className="text-4xl font-semibold">About Me</h1>
         <p>
-          Lorem ipsum dolor sit amet consectetur. Tristique amet sed massa nibh
-          lectus netus in. Aliquet donec morbi convallis pretium. Turpis tempus
-          pharetra
+          I’m a Computer and Automation Engineering graduate, specializing in web application development.  
+I work as a Frontend Developer using React, creating modern, responsive, and user-friendly interfaces.
+
         </p>
         {skills.map((ele, index) => {
           return (

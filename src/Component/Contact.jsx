@@ -2,6 +2,8 @@ import React from "react";
 import { IoCallOutline } from "react-icons/io5";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { CiLocationOn } from "react-icons/ci";
+import { CiMail } from "react-icons/ci";
+
 
 const Contact = () => {
   return (
@@ -20,7 +22,7 @@ const Contact = () => {
             />
             <div>
               <p>Call me</p>
-              <p>+96396900000</p>
+              <p>+963997224089</p>
             </div>
           </div>
           <div className="flex items-center gap-3">
@@ -29,9 +31,9 @@ const Contact = () => {
               color="#7DE0EA"
               className="p-2 bg-mainColor text-white rounded "
             />
-            <div>
-              <p>Address</p>
-              <p>Damascus,syria</p>
+            <div> <p>Gmail</p>
+              <p>mernahalla@gmail.com</p>
+             
             </div>
           </div>
           <div className="flex items-center gap-3">
@@ -41,23 +43,23 @@ const Contact = () => {
               className="p-2 bg-mainColor text-white rounded"
             />
             <div>
-              <p>Address</p>
-              <p>Damascus,syria</p>
-            </div>
+           <p>Address</p>
+              <p>Damascus ,Syria</p>
+            </div> 
           </div>
         </div>
-        <form className="basis-2/4 space-y-6">
-          <div className="flex sm:flex-row flex-col gap-1 gap-y-6">
+        <form className=" space-y-6">
+          <div className="flex sm:flex-row justify-between flex-col gap-1 gap-y-6">
             <input
               type="text"
               placeholder="Full name"
-              className=" sm:basis-2/5 w-full border border-gray rounded-lg p-2 outline-none"
+              className=" sm:basis-2/5 w-1/2 border border-gray rounded-lg p-2 outline-none"
             />
 
             <input
               type="email"
               placeholder="Your email"
-              className="sm:basis-2/5 w-full ml-auto border border-gray rounded-lg p-2 outline-none"
+              className="sm:basis-2/5 w-full border border-gray rounded-lg p-2 outline-none"
             />
           </div>
           <input

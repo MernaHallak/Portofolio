@@ -11,7 +11,7 @@ import { IoClose } from "react-icons/io5";
 const NavBar = ({ isDarkMode, changeTheme }) => {
   // const { isDarkMode, toggleTheme } = useContext(ThemeContext);
   const [isOpen, setIsOpen] = useState(false);
-  const links = ["hero", "about", "education", "projects", "contact"];
+  const links = ["Hero", "About", "Education", "Projects", "Contact"];
   return (
     <header
       className={`fixed z-50  top-0 left-0 w-full  ${

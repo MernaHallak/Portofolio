@@ -1,15 +1,11 @@
 import squers from "../assets/squers.png";
 import circle from "../assets/Circle.png";
-import image from "../assets/Image.png";
+import profileImage from "../assets/profile-image.jpg";
 import bgRadial from "../assets/bg.png";
 import { jsPDF } from "jspdf";
 
 const Hero = ({ isDarkMode }) => {
-  const handleDownload = () => {
-    const doc = new jsPDF();
-    doc.text("PDF", 10, 10);
-    doc.save("ملفي.pdf");
-  };
+  
   return (
     <div>
       <div
@@ -27,28 +23,35 @@ const Hero = ({ isDarkMode }) => {
           // }}
         >
           <figure className="absolute  md:top-44 top-left-3  md:w-96 md:h-96 w-52 h-52  rounded-full bg-sky-600 opacity-20 blur-3xl" />
-          <div className="text-center sm:text-start ">
+          <div className="text-center sm:text-start relative z-10">
             <div className={`${isDarkMode ? "text-white" : "text-black"} `}>
               <h1 className=" leading-tight text-4xl mb-4 ">
                 HEY!
                 <span className=" font-bold">
-                  I’m Laura, Frontend Developer
+                  I’m Merna, Frontend Developer
                 </span>
               </h1>
-              <p className="text-[#43495B] text-lg mb-4">
-                Agency-quality Webflow websites with the personal touch of a
-                freelancer
+              <p className="text-[#7f90c3] text-lg mb-10">
+              Turning ideas into interactive designs.
               </p>
             </div>
 
-            <button
-              onClick={handleDownload}
-              className={`${
-                isDarkMode ? "bg-[#7DE0EA] text-white" : "bg-black text-white"
-              } px-6 py-3 rounded-md hover:bg-gray-800 transition duration-300 font-bold`}
+             <a
+  href="/Merna Resume.pdf"
+  download="Merna_Resume.pdf"
+  className={` text-center ${
+    isDarkMode ? "bg-[#7DE0EA] text-white" : "bg-black text-white"
+  } px-6 py-3 rounded-md hover:bg-gray-800 transition duration-300 font-bold cursor-pointer`}
+>
+  Download Resume
+</a>
+
+            {/* <button
+       
+             
             >
               Download CV
-            </button>
+            </button> */}
           </div>
         </div>
 
@@ -58,15 +61,15 @@ const Hero = ({ isDarkMode }) => {
             style={{ backgroundImage: `url(${squers})` }}
           ></div>
 
-          <div
+          {/* <div
             className="absolute inset-0 bg-no-repeat bg-center bg-contain scale-90"
             style={{ backgroundImage: `url(${circle})` }}
-          ></div>
+          ></div> */}
 
-          <img
-            src={image}
+        <img
+            src={profileImage}
             alt="Profile"
-            className="relative z-10 w-64 pt-4 object-cover"
+            className="relative z-10 w-64 pt-4 object-cover rounded-full"
           />
         </div>
       </div>

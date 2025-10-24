@@ -30,14 +30,10 @@ const Experience = () => {
               <div className="mb-4 ">
                 <h1 className="text-lg font-bold">
                   {" "}
-                  Computer Engineering Student - 5th Year
+                 Computer Engineering Graduate  
                 </h1>
                 <p>
-                  Currently in my fifth year of Computer Engineering with a
-                  specialization in Software Systems. Possess strong
-                  fundamentals in algorithms and data structures. Passionate
-                  about developing innovative software solutions that meet user
-                  needs.
+               Graduated with a specialization in Software Systems. Has strong fundamentals in algorithms and data structures. Passionate about developing innovative software solutions that meet user needs.
                 </p>
               </div>
               <div className="mb-4 ">
@@ -61,11 +57,11 @@ const Experience = () => {
             <div className="flex flex-col gap-14 ">
               <div className="mb-4">
                 <h1 className="text-lg font-bold">
-                  {" "}
+                  
                   React Developer (Professional Experience at VICA)
                 </h1>
                 <p>
-                  i trained as a Front-End Developer at VICA using React.js for
+                  I trained as a Front-End Developer at VICA using React.js for
                   3 months. Contributed to developing user interfaces for
                   project management applications.
                 </p>

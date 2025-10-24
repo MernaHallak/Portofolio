@@ -9,9 +9,9 @@ const LayOut1 = ({ isDarkMode }) => {
   // const { isDarkMode } = useContext(ThemeContext);
 
   const skills = [
-    { name: "Html 5", rate: "90" },
-    { name: "Css 3", rate: "80" },
-    { name: "Js", rate: "85" },
+    { name: "HTML 5", rate: "90" },
+    { name: "CSS 3", rate: "80" },
+    { name: "JS", rate: "85" },
     { name: "React", rate: "70" },
   ];
   return (
