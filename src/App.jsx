@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
 import { createContext, useState } from "react";
 import ProjectPage from "./Page/ProjectPage";
 import HomePage from "./Page/HomePage";
+import ScrollToTop from "./Component/ScrollToTop";
 
 function App() {
   // const [isDarkMode, setIsDarkMode] = useState(false);
@@ -10,6 +11,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
+      <ScrollToTop />
         <Routes>
           <Route index element={<HomePage />}></Route>
           <Route path="/project/:id" element={<ProjectPage />}></Route>
