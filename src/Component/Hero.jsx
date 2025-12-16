@@ -2,7 +2,7 @@ import profileImage from "../assets/profile-image.png";
 
 const Hero = ({ isDarkMode }) => {
   return (
-    <section id="hero" className="section relative overflow-hidden pt-28 sm:pt-32">
+    <section id="hero" className="section relative overflow-hidden pt-28 sm:pt-32 scroll-mt-28">
       {/* Decorative blobs */}
       <div className="pointer-events-none absolute -top-24 -left-20 h-80 w-80 rounded-full bg-brand-200/40 blur-3xl" />
       <div className="pointer-events-none absolute -bottom-24 -right-24 h-96 w-96 rounded-full bg-lavender-200/40 blur-3xl" />

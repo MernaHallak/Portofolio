@@ -54,7 +54,7 @@ const Contact = ({ isDarkMode }) => {
   }
 
   return (
-    <section id="contact" className="section">
+    <section id="contact" className="section scroll-mt-28">
       <div className="text-center md:text-left">
         <p className="section-kicker">Contact</p>
         <h2 className="section-title">

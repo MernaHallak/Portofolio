@@ -6,7 +6,7 @@ const Portfolio = ({ isHome, isDarkMode }) => {
   const displayedProjects = isHome ? projects : projects;
 
   return (
-    <section id="projects" className="section">
+    <section id="projects" className="section scroll-mt-28">
       <div className="flex items-end justify-between gap-6 flex-wrap">
         <div>
           <p className="section-kicker">Portfolio</p>

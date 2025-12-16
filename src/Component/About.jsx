@@ -2,7 +2,7 @@ import imageAbout from "../assets/about.png";
 
 const About = ({ skills, isDarkMode }) => {
   return (
-    <section id="about" className="section">
+    <section id="about" className="section scroll-mt-28">
       <div className="grid gap-10 md:grid-cols-2 items-center">
         <div className="relative">
           <div className="absolute -inset-4 rounded-3xl bg-brand-100/60 blur-2xl" />

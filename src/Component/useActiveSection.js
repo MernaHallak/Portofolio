@@ -1,32 +1,46 @@
 import { useEffect, useState } from "react";
 
+const NAV_OFFSET_PX = 120; // عدّليها إذا Navbar أعلى/أقل
+
 export default function useActiveSection(sectionIds = []) {
   const [activeId, setActiveId] = useState(sectionIds[0] || "hero");
 
   useEffect(() => {
-    const els = sectionIds
-      .map((id) => document.getElementById(id))
-      .filter(Boolean);
+    if (!sectionIds?.length) return;
 
-    if (!els.length) return;
+    let raf = 0;
 
-    const obs = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => (b.intersectionRatio || 0) - (a.intersectionRatio || 0))[0];
+    const getActive = () => {
+      const y = window.scrollY + NAV_OFFSET_PX;
 
-        if (visible?.target?.id) setActiveId(visible.target.id);
-      },
-      {
-  
-        threshold: [0, 0.1, 0.2, 0.35],
-        rootMargin: "-15% 0px -45% 0px",
+      // نختار آخر section صار فوق (y)
+      let current = sectionIds[0] || "hero";
+
+      for (const id of sectionIds) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        if (el.offsetTop <= y) current = id;
       }
-    );
 
-    els.forEach((el) => obs.observe(el));
-    return () => obs.disconnect();
+      setActiveId((prev) => (prev === current ? prev : current));
+    };
+
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(getActive);
+    };
+
+    // أول تحديد
+    getActive();
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, [sectionIds.join("|")]);
 
   return activeId;

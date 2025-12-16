@@ -25,7 +25,7 @@ const Experience = ({ isDarkMode }) => {
   ];
 
   return (
-    <section id="education" className="section">
+    <section id="education" className="section scroll-mt-28">
       <div className="flex items-end justify-between gap-6">
         <div>
           <p className="section-kicker">Education & Experience</p>
