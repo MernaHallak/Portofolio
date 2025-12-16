@@ -1,9 +1,57 @@
+import { useState } from "react";
 import { IoCallOutline } from "react-icons/io5";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { CiLocationOn } from "react-icons/ci";
 
+const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY;
+
 const Contact = ({ isDarkMode }) => {
   const cardCls = isDarkMode ? "bg-slate-900/60 border-slate-700/60" : "";
+  const [status, setStatus] = useState("idle"); 
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+   
+    if (status === "sending") return;
+
+    setStatus("sending");
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+  
+    formData.append("access_key", WEB3FORMS_KEY);
+    formData.append("subject", "New message from portfolio");
+    formData.append("from_name", "Merna Portfolio");
+
+   
+    const botcheck = formData.get("botcheck");
+    if (botcheck) {
+      setStatus("error");
+      return;
+    }
+
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        setStatus("success");
+        form.reset();
+      } else {
+        console.error("Web3Forms error:", data);
+        setStatus("error");
+      }
+    } catch (err) {
+      console.error(err);
+      setStatus("error");
+    }
+  }
 
   return (
     <section id="contact" className="section">
@@ -58,10 +106,21 @@ const Contact = ({ isDarkMode }) => {
         </div>
 
         <div className={`card p-6 lg:col-span-2 ${cardCls}`}>
-          <form className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Honeypot (hidden) */}
+            <input
+              type="text"
+              name="botcheck"
+              tabIndex="-1"
+              autoComplete="off"
+              className="hidden"
+            />
+
             <div className="grid gap-4 sm:grid-cols-2">
               <input
+                name="name"
                 type="text"
+                required
                 placeholder="Your name"
                 className={`w-full rounded-2xl border px-4 py-3 outline-none transition-colors ${
                   isDarkMode
@@ -70,7 +129,9 @@ const Contact = ({ isDarkMode }) => {
                 }`}
               />
               <input
+                name="email"
                 type="email"
+                required
                 placeholder="Your email"
                 className={`w-full rounded-2xl border px-4 py-3 outline-none transition-colors ${
                   isDarkMode
@@ -81,6 +142,7 @@ const Contact = ({ isDarkMode }) => {
             </div>
 
             <input
+              name="phone"
               type="tel"
               placeholder="Phone number (optional)"
               className={`w-full rounded-2xl border px-4 py-3 outline-none transition-colors ${
@@ -91,6 +153,8 @@ const Contact = ({ isDarkMode }) => {
             />
 
             <textarea
+              name="message"
+              required
               placeholder="Message"
               className={`w-full resize-none rounded-2xl border px-4 py-3 outline-none transition-colors ${
                 isDarkMode
@@ -100,12 +164,28 @@ const Contact = ({ isDarkMode }) => {
               rows={6}
             />
 
-            <button type="button" className={isDarkMode ? "btn-primary" : "btn-primary"}>
-              Send Message
+            <button
+              type="submit"
+              disabled={status === "sending"}
+              className="btn-primary disabled:opacity-60 disabled:cursor-not-allowed"
+            >
+              {status === "sending" ? "Sending..." : "Send Message"}
             </button>
 
+            {status === "success" ? (
+              <p className={isDarkMode ? "text-emerald-300 text-sm" : "text-emerald-700 text-sm"}>
+                ✅ Message sent! I’ll get back to you soon.
+              </p>
+            ) : null}
+
+            {status === "error" ? (
+              <p className={isDarkMode ? "text-rose-300 text-sm" : "text-rose-700 text-sm"}>
+                ❌ Something went wrong. Please try again.
+              </p>
+            ) : null}
+
             <p className={isDarkMode ? "text-slate-400 text-sm" : "text-slate-500 text-sm"}>
-              (This form is UI-only — connect it to email/service later if needed.)
+              (This form sends directly to your email via Web3Forms.)
             </p>
           </form>
         </div>
