@@ -1,7 +1,7 @@
 import ImageProject from "../assets/projects.png";
 import dashSTack from "../assets/projects Images/DashStack.jpg";
 import Edujar from "../assets/projects Images/Edujar.jpg";
-import Portfolio from "../assets/projects Images/Portfolio.jpg";
+import Portfolio from "../assets/projects Images/Portfolio.png";
 import Products from "../assets/projects Images/Products.jpg";
 export const projects = [
   {
