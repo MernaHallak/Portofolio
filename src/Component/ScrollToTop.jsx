@@ -1,16 +1,16 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
-const NAV_OFFSET_PX = 120; // نفس القيمة (عدّليها إذا لزم)
+const NAV_OFFSET_PX = 120;
 
 export default function ScrollToTop() {
   const { pathname, hash } = useLocation();
 
   useEffect(() => {
-    // إذا في hash: انزلي للقسم مع تعويض navbar
+    
     if (hash) {
       const id = hash.replace("#", "");
-      // تأخير بسيط لتأكد DOM جاهز
+    
       setTimeout(() => {
         const el = document.getElementById(id);
         if (el) {
@@ -23,7 +23,7 @@ export default function ScrollToTop() {
       return;
     }
 
-    // بدون hash: رجّع لأول الصفحة عند تغيير المسار
+    
     window.scrollTo({ top: 0, left: 0, behavior: "instant" });
   }, [pathname, hash]);
 

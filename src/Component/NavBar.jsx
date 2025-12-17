@@ -6,7 +6,7 @@ import { IoClose } from "react-icons/io5";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import useActiveSection from "./useActiveSection";
 
-const NAV_OFFSET_PX = 120; // عدّليها إذا لزم
+const NAV_OFFSET_PX = 120; 
 
 const NavBar = ({ isDarkMode, changeTheme }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -29,16 +29,15 @@ const NavBar = ({ isDarkMode, changeTheme }) => {
   const isHome = location.pathname === "/";
   const isProjectPage = location.pathname.startsWith("/project");
 
-  // scroll spy فقط على الصفحة الرئيسية
+
   const observedActive = isHome ? useActiveSection(links.map((l) => l.id)) : null;
 
-  // لما الـ spy يلحق نفس اللي كبسناه، شيل override
   useEffect(() => {
     if (!manualActive) return;
     if (observedActive === manualActive) setManualActive(null);
   }, [observedActive, manualActive]);
 
-  // Active النهائي
+
   const activeId = isProjectPage ? "projects" : manualActive || observedActive || "hero";
 
   const headerCls = isDarkMode
@@ -84,7 +83,7 @@ const NavBar = ({ isDarkMode, changeTheme }) => {
       return;
     }
 
-    // من أي صفحة ثانية: رجّعي للهوم مع hash
+   
     navigate(`/#${id}`);
   };
 
