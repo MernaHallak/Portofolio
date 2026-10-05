@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-white font-sans text-slate-800 antialiased transition-colors dark:bg-slate-950 dark:text-slate-100;
+  }
+
+  ::selection {
+    background: rgba(251, 113, 133, 0.25);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+@layer components {
+  .section {
+    @apply container mx-auto scroll-mt-28 px-5 py-20;
+  }
+
+  .section-kicker {
+    @apply text-xs font-semibold uppercase tracking-wide text-brand sm:text-sm;
+  }
+
+  .section-title {
+    @apply font-display text-3xl font-semibold leading-tight sm:text-4xl md:text-5xl;
+  }
+
+  .section-subtitle {
+    @apply text-base leading-relaxed text-slate-600 dark:text-slate-300 sm:text-lg;
+  }
+
+  .card {
+    @apply rounded-2xl border border-slate-200/70 bg-white shadow-soft dark:border-slate-700/60 dark:bg-slate-900/60;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/40 sm:text-base;
+  }
+
+  .btn-primary {
+    @apply btn bg-brand text-white hover:brightness-95 active:scale-[0.99];
+  }
+
+  .btn-ghost {
+    @apply btn border border-slate-200 bg-white/70 text-slate-800 hover:bg-white active:scale-[0.99] dark:border-slate-700 dark:bg-slate-900/70 dark:text-slate-100 dark:hover:bg-slate-900;
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-2 rounded-full border border-brand-100 bg-brand-50 px-3 py-1 text-xs font-medium text-brand-700 sm:text-sm;
+  }
+}
+
+.progress::-webkit-progress-bar {
+  background-color: #f1f5f9;
+  border-radius: 9999px;
+}
+
+.progress::-webkit-progress-value {
+  background-color: #fb7185;
+  border-radius: 9999px;
+}
+
+.progress::-moz-progress-bar {
+  background-color: #fb7185;
+  border-radius: 9999px;
+}
