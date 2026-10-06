@@ -1,45 +1,81 @@
-import { FaFacebookF, FaInstagram } from 'react-icons/fa';
-import { LiaLinkedinIn } from 'react-icons/lia';
+import { FaFacebookF, FaGithub, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
 import { site } from '../../data/site';
 
-const socialIcons = [FaFacebookF, LiaLinkedinIn, FaInstagram];
+const socialIcons = {
+  github: FaGithub,
+  linkedin: FaLinkedinIn,
+  facebook: FaFacebookF,
+  instagram: FaInstagram,
+} as const;
 
 export function Footer() {
+  const professionalLinks = site.socialLinks.filter(
+    (link) => link.kind === 'github' || link.kind === 'linkedin',
+  );
+  const secondaryLinks = site.socialLinks.filter(
+    (link) => link.kind === 'facebook' || link.kind === 'instagram',
+  );
+
   return (
-    <footer className="border-t border-slate-200/70 bg-white text-slate-800 dark:border-slate-800/70 dark:bg-slate-950 dark:text-slate-100">
-      <div className="container mx-auto px-5 py-10">
-        <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+    <footer className="border-t border-line bg-surface text-ink">
+      <div className="mx-auto w-full max-w-7xl px-5 py-10 sm:px-6 lg:px-8">
+        <div className="grid gap-8 md:grid-cols-[1fr_auto] md:items-end">
           <div>
-            <p className="font-display text-2xl font-semibold">
-              Merna<span className="text-brand">.</span>
+            <p className="text-xl font-extrabold tracking-tight">
+              Merna Hallak<span className="text-accent">.</span>
             </p>
-            <p className="mt-1 text-slate-500 dark:text-slate-400">
-              Built with React + Tailwind • Soft, friendly portfolio UI
+            <p className="mt-2 max-w-lg text-muted">
+              Frontend Developer building responsive interfaces with React and Next.js.
             </p>
+            <div className="mt-5 flex flex-wrap gap-3">
+              <a href={`mailto:${site.contact.email}`} className="text-link">
+                Email
+              </a>
+              <span aria-hidden="true" className="text-line">
+                /
+              </span>
+              <a href="/resume/Merna%20Resume.pdf" className="text-link">
+                Résumé
+              </a>
+            </div>
           </div>
-          <div className="flex items-center gap-3">
-            {site.socialLinks.map((link, index) => {
-              const Icon = socialIcons[index];
-              return (
+
+          <div>
+            <div className="flex items-center gap-3">
+              {professionalLinks.map((link) => {
+                const Icon = socialIcons[link.kind];
+                return (
+                  <a
+                    key={link.kind}
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex h-11 w-11 items-center justify-center rounded-full border border-line bg-canvas text-ink transition-colors hover:border-accent hover:text-accent"
+                    aria-label={link.label}
+                  >
+                    <Icon size={20} />
+                  </a>
+                );
+              })}
+            </div>
+            <div className="mt-4 flex gap-4 text-sm text-muted">
+              {secondaryLinks.map((link) => (
                 <a
-                  key={link.label}
+                  key={link.kind}
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 transition-colors hover:bg-brand-50 dark:border-slate-700 dark:hover:bg-slate-900"
-                  aria-label={link.label}
+                  className="rounded-sm transition-colors hover:text-ink"
                 >
-                  <Icon
-                    className="text-brand dark:text-slate-100"
-                    size={index === 1 ? 20 : undefined}
-                  />
+                  {link.label}
                 </a>
-              );
-            })}
+              ))}
+            </div>
           </div>
         </div>
-        <p className="mt-8 text-sm text-slate-500 dark:text-slate-400">
-          © {new Date().getFullYear()} Merna. All rights reserved.
+
+        <p className="mt-8 border-t border-line pt-6 text-sm text-muted">
+          © {new Date().getFullYear()} Merna Hallak. All rights reserved.
         </p>
       </div>
     </footer>

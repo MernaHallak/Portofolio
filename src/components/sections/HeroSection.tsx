@@ -1,63 +1,70 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { FiArrowDownRight, FiDownload, FiMail } from 'react-icons/fi';
 import { site } from '../../data/site';
 
 export function HeroSection() {
   return (
-    <section id="hero" className="section relative scroll-mt-28 overflow-hidden pt-28 sm:pt-32">
-      <div className="pointer-events-none absolute -left-20 -top-24 h-80 w-80 rounded-full bg-brand-200/40 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-24 -right-24 h-96 w-96 rounded-full bg-lavender-200/40 blur-3xl" />
+    <section
+      id="hero"
+      className="relative scroll-mt-24 overflow-hidden border-b border-line bg-surface pt-[68px]"
+    >
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-56 bg-[radial-gradient(circle_at_78%_20%,var(--color-accent-soft),transparent_58%)]" />
 
-      <div className="grid items-center gap-10 md:grid-cols-2">
-        <div className="relative z-10 text-center md:text-left">
-          <p className="section-kicker">{site.hero.role}</p>
-          <h1 className="section-title mt-3">
-            {site.hero.greeting} <span className="text-brand">Merna</span> ✨
-          </h1>
-          <p className="section-subtitle mx-auto mt-4 max-w-xl md:mx-0">{site.hero.description}</p>
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-2 md:justify-start">
-            {site.hero.chips.map((chip) => (
-              <span key={chip} className="chip">
-                {chip}
-              </span>
-            ))}
-          </div>
-          <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row md:justify-start">
-            <a
-              href="/resume/Merna%20Resume.pdf"
-              download="Merna_Resume.pdf"
-              className="btn-primary"
-            >
-              Download Resume
-            </a>
-            <Link href="/#contact" className="btn-ghost">
-              Let’s Talk
-            </Link>
-          </div>
-          <p className="mt-6 text-sm text-slate-500 dark:text-slate-400">
-            Scroll to explore my work
-          </p>
-        </div>
+      <div className="section relative py-10 sm:py-16 lg:py-24">
+        <div className="grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
+          <div className="text-center lg:text-left">
+            <p className="section-kicker">{site.hero.role}</p>
+            <h1 className="mt-3 font-display text-4xl font-semibold leading-[1.06] tracking-[-0.035em] sm:mt-4 sm:text-5xl lg:text-[3.5rem]">
+              {site.hero.greeting} <span className="text-accent">Merna</span>.
+            </h1>
+            <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-muted sm:mt-5 sm:text-lg sm:leading-8 lg:mx-0 lg:max-w-xl">
+              {site.hero.description}
+            </p>
 
-        <div className="relative z-10 flex items-center justify-center">
-          <div className="relative">
-            <div className="absolute -inset-6 rounded-full bg-gradient-to-b from-brand-200/50 to-lavender-200/30 blur-2xl" />
-            <div className="relative rounded-full border border-slate-200/70 bg-white/80 p-2 shadow-soft backdrop-blur dark:border-slate-700 dark:bg-slate-900/80">
+            <div className="mt-5 flex flex-wrap items-center justify-center gap-1.5 sm:mt-6 sm:gap-2 lg:justify-start">
+              {site.hero.chips.map((chip) => (
+                <span key={chip} className="chip px-2.5 text-[13px] sm:px-3 sm:text-sm">
+                  {chip}
+                </span>
+              ))}
+            </div>
+
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-2 sm:mt-8 sm:gap-3 lg:justify-start">
+              <Link href="/#projects" className="btn-primary px-4 text-sm">
+                View projects <FiArrowDownRight aria-hidden="true" />
+              </Link>
+              <Link href="/#contact" className="btn-secondary px-4 text-sm">
+                Contact <FiMail aria-hidden="true" />
+              </Link>
+              <a
+                href="/resume/Merna%20Resume.pdf"
+                download="Merna_Resume.pdf"
+                className="text-link inline-flex min-h-11 items-center gap-1.5 px-2 text-sm"
+              >
+                Résumé <FiDownload aria-hidden="true" />
+              </a>
+            </div>
+          </div>
+
+          <div className="relative mx-auto w-full max-w-[240px] sm:max-w-[320px] lg:max-w-[380px]">
+            <div className="absolute -inset-5 rounded-full bg-accentSoft blur-2xl" />
+            <div className="relative rounded-full border border-strongLine bg-elevated p-2 shadow-lift">
               <Image
                 src="/images/profile/profile-image.png"
-                alt="Profile"
-                width={380}
-                height={380}
+                alt="Portrait of Merna Hallak"
+                width={407}
+                height={408}
                 priority
-                sizes="(max-width: 640px) 288px, (max-width: 768px) 320px, 380px"
-                className="h-72 w-72 rounded-full object-cover sm:h-80 sm:w-80 md:h-[380px] md:w-[380px]"
+                sizes="(max-width: 640px) 240px, (max-width: 1024px) 340px, 380px"
+                className="aspect-square w-full rounded-full object-cover"
               />
             </div>
-            <div className="absolute -bottom-4 left-1/2 -translate-x-1/2">
-              <div className="card flex items-center gap-2 px-5 py-3">
-                <span className="h-2 w-2 rounded-full bg-mint-500" />
-                <span className="text-sm font-semibold">{site.hero.availability}</span>
-              </div>
+            <div className="absolute -bottom-4 left-1/2 w-max -translate-x-1/2 rounded-full border border-line bg-surface px-4 py-2.5 shadow-soft">
+              <span className="flex items-center gap-2 text-sm font-bold text-ink">
+                <span className="h-2.5 w-2.5 rounded-full bg-emerald-500" aria-hidden="true" />
+                {site.hero.availability}
+              </span>
             </div>
           </div>
         </div>

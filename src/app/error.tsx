@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+
 export default function ErrorPage({
   reset,
 }: {
@@ -14,9 +16,14 @@ export default function ErrorPage({
         <p className="section-subtitle mt-4">
           We couldn&apos;t load this part of the portfolio. You can try again or return home.
         </p>
-        <button type="button" onClick={reset} className="btn-primary mt-7">
-          Try again
-        </button>
+        <div className="mt-7 flex flex-wrap justify-center gap-3">
+          <button type="button" onClick={reset} className="btn-primary">
+            Try again
+          </button>
+          <Link href="/" className="btn-secondary">
+            Back to home
+          </Link>
+        </div>
       </div>
     </section>
   );

@@ -11,3 +11,15 @@ export function normalizeExternalUrl(url: string): string {
 
   return `https://${trimmedUrl.replace(/^\/+/, '')}`;
 }
+
+export function getGitHubLinkLabel(url: string): 'GitHub' | 'GitHub Profile' {
+  try {
+    const normalizedUrl = new URL(normalizeExternalUrl(url));
+    const pathParts = normalizedUrl.pathname.split('/').filter(Boolean);
+    return normalizedUrl.hostname === 'github.com' && pathParts.length <= 1
+      ? 'GitHub Profile'
+      : 'GitHub';
+  } catch {
+    return 'GitHub';
+  }
+}

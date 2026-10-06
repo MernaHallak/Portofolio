@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState, type MouseEvent } from 'react';
+import { useEffect, useRef, useState, type MouseEvent } from 'react';
 import { FaBars, FaMoon } from 'react-icons/fa';
 import { IoClose, IoSunny } from 'react-icons/io5';
 import { navigationItems } from '../../data/site';
@@ -15,9 +15,26 @@ export function SiteHeader() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
   const { theme, toggleTheme } = useTheme();
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const firstMobileLinkRef = useRef<HTMLAnchorElement>(null);
   const isHome = pathname === '/';
   const observedActive = useActiveSection(sectionIds, isHome);
-  const activeId = isHome ? observedActive : 'projects';
+  const activeId = isHome ? observedActive : undefined;
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    firstMobileLinkRef.current?.focus();
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key !== 'Escape') return;
+      setIsOpen(false);
+      menuButtonRef.current?.focus();
+    }
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen]);
 
   function scrollToSection(event: MouseEvent<HTMLAnchorElement>, id: string) {
     setIsOpen(false);
@@ -34,27 +51,24 @@ export function SiteHeader() {
   }
 
   const desktopLinkClass = (id: string) =>
-    `cursor-pointer text-sm font-semibold transition-colors ${
-      activeId === id
-        ? 'text-brand dark:text-brand-300'
-        : 'hover:text-brand dark:hover:text-brand-300'
+    `rounded-sm px-1 py-2 text-sm font-bold transition-colors ${
+      activeId === id ? 'text-accent' : 'text-muted hover:text-ink'
     }`;
 
   const mobileLinkClass = (id: string) =>
-    `block w-full rounded-xl px-3 py-2 text-left font-semibold transition-colors ${
-      activeId === id
-        ? 'bg-brand-50 text-brand dark:bg-slate-800 dark:text-brand-300'
-        : 'text-slate-800 hover:bg-brand-50 dark:text-slate-100 dark:hover:bg-slate-800'
+    `block min-h-11 w-full rounded-xl px-4 py-3 text-left font-bold transition-colors ${
+      activeId === id ? 'bg-accentSoft text-accent' : 'text-ink hover:bg-mutedSurface'
     }`;
 
   return (
-    <header className="fixed left-0 top-0 z-50 w-full border-b border-slate-200/70 bg-white/70 text-slate-800 backdrop-blur dark:border-slate-800/70 dark:bg-slate-950/70 dark:text-slate-100">
-      <div className="container mx-auto flex items-center justify-between px-5 py-4">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-line bg-canvas shadow-sm">
+      <div className="mx-auto flex h-[68px] w-full max-w-7xl items-center justify-between px-5 sm:px-6 lg:px-8">
         <div className="flex items-center gap-3">
           <button
+            ref={menuButtonRef}
             type="button"
             onClick={() => setIsOpen((open) => !open)}
-            className="inline-flex items-center justify-center rounded-xl border border-slate-200 p-2 md:hidden dark:border-slate-700 dark:hover:bg-slate-900"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-line bg-surface text-ink transition-colors hover:border-strongLine lg:hidden"
             aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
             aria-expanded={isOpen}
             aria-controls="mobile-navigation"
@@ -64,21 +78,21 @@ export function SiteHeader() {
           <Link
             href="/#hero"
             onClick={(event) => scrollToSection(event, 'hero')}
-            className="font-display text-xl font-semibold sm:text-2xl"
+            className="rounded-sm text-lg font-extrabold tracking-tight sm:text-xl"
           >
-            Merna<span className="text-brand">.</span>
+            Merna<span className="text-accent">.</span>
           </Link>
         </div>
 
-        <nav className="hidden md:block" aria-label="Primary navigation">
-          <ul className="flex items-center gap-6">
+        <nav className="hidden lg:block" aria-label="Primary navigation">
+          <ul className="flex items-center gap-7">
             {navigationItems.map((item) => (
               <li key={item.id}>
                 <Link
                   href={`/#${item.id}`}
                   onClick={(event) => scrollToSection(event, item.id)}
                   className={desktopLinkClass(item.id)}
-                  aria-current={activeId === item.id ? 'page' : undefined}
+                  aria-current={activeId === item.id ? 'location' : undefined}
                 >
                   {item.label}
                 </Link>
@@ -90,7 +104,7 @@ export function SiteHeader() {
         <button
           type="button"
           onClick={toggleTheme}
-          className="inline-flex items-center justify-center rounded-xl border border-slate-200 p-2 transition-colors hover:bg-slate-50 dark:border-slate-700 dark:hover:bg-slate-900"
+          className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-line bg-surface text-ink transition-colors hover:border-strongLine"
           aria-label={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
         >
           {theme === 'dark' ? <IoSunny size={22} /> : <FaMoon size={18} />}
@@ -98,35 +112,26 @@ export function SiteHeader() {
       </div>
 
       {isOpen ? (
-        <div className="md:hidden" id="mobile-navigation">
-          <nav className="container mx-auto px-5 pb-5" aria-label="Mobile navigation">
-            <div className="card p-4">
-              <ul className="space-y-2">
-                {navigationItems.map((item) => (
-                  <li key={item.id}>
-                    <Link
-                      href={`/#${item.id}`}
-                      onClick={(event) => scrollToSection(event, item.id)}
-                      className={mobileLinkClass(item.id)}
-                      aria-current={activeId === item.id ? 'page' : undefined}
-                    >
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
-                {!isHome ? (
-                  <li className="pt-2">
-                    <Link
-                      href="/"
-                      onClick={() => setIsOpen(false)}
-                      className={mobileLinkClass('home')}
-                    >
-                      Home
-                    </Link>
-                  </li>
-                ) : null}
-              </ul>
-            </div>
+        <div className="border-t border-line bg-canvas lg:hidden" id="mobile-navigation">
+          <nav
+            className="mx-auto w-full max-w-7xl px-5 py-4 sm:px-6"
+            aria-label="Mobile navigation"
+          >
+            <ul className="space-y-1">
+              {navigationItems.map((item, index) => (
+                <li key={item.id}>
+                  <Link
+                    ref={index === 0 ? firstMobileLinkRef : undefined}
+                    href={`/#${item.id}`}
+                    onClick={(event) => scrollToSection(event, item.id)}
+                    className={mobileLinkClass(item.id)}
+                    aria-current={activeId === item.id ? 'location' : undefined}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </nav>
         </div>
       ) : null}

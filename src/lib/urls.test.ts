@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { normalizeExternalUrl } from './urls';
+import { getGitHubLinkLabel, normalizeExternalUrl } from './urls';
 
 describe('normalizeExternalUrl', () => {
   it('keeps an existing https URL unchanged', () => {
@@ -12,5 +12,10 @@ describe('normalizeExternalUrl', () => {
     expect(normalizeExternalUrl('merna-hallak-portfollio.vercel.app')).toBe(
       'https://merna-hallak-portfollio.vercel.app',
     );
+  });
+
+  it('labels profile-level GitHub links truthfully', () => {
+    expect(getGitHubLinkLabel('https://github.com/MernaHallak')).toBe('GitHub Profile');
+    expect(getGitHubLinkLabel('https://github.com/MernaHallak/example-project')).toBe('GitHub');
   });
 });

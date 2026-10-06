@@ -1,63 +1,99 @@
 export const navigationItems = [
-  { label: 'Hero', id: 'hero' },
+  { label: 'Home', id: 'hero' },
   { label: 'About', id: 'about' },
-  { label: 'Education', id: 'education' },
+  { label: 'Experience', id: 'education' },
   { label: 'Projects', id: 'projects' },
   { label: 'Contact', id: 'contact' },
 ] as const;
 
 export const site = {
-  name: 'Merna',
-  title: 'Merna Portfollio',
+  name: 'Merna Hallak',
+  title: 'Merna Hallak | Frontend Developer',
+  url: 'https://merna-hallak-portfollio.vercel.app',
   hero: {
-    role: 'Frontend Developer • React',
+    role: 'Frontend Developer',
     greeting: 'Hi, I’m',
     description:
-      'I build clean, responsive, and user-friendly web interfaces with a soft, modern touch — focusing on clarity, accessibility, and delightful details.',
-    chips: ['React', 'Tailwind', 'UI Refinement', 'Responsive Design'],
+      'I build responsive web interfaces with React, Next.js, and Tailwind CSS, turning product requirements into clear, accessible experiences.',
+    chips: ['React', 'Next.js', 'Tailwind CSS', 'REST APIs'],
     availability: 'Available for opportunities',
   },
   about: {
     description:
-      'I’m a Computer and Automation Engineering graduate, specializing in web application development. I work as a Frontend Developer using React, building modern, responsive, and user-friendly interfaces.',
-    skills: [
-      { name: 'HTML 5', rate: 90 },
-      { name: 'CSS 3', rate: 80 },
-      { name: 'JS', rate: 85 },
-      { name: 'React', rate: 70 },
+      'I’m a Frontend Developer and Computer and Automation Engineering graduate. I build responsive websites with React, Next.js, and Tailwind CSS, and support practical delivery work from interface updates to deployment.',
+    skillGroups: [
+      {
+        title: 'Primary stack',
+        skills: ['React', 'Next.js', 'JavaScript', 'Tailwind CSS'],
+      },
+      {
+        title: 'APIs & frontend architecture',
+        skills: ['REST APIs', 'Context API', 'Axios'],
+      },
+      {
+        title: 'Tools & workflow',
+        skills: ['Git', 'GitHub', 'GitHub Actions', 'Postman'],
+      },
+      {
+        title: 'Supporting',
+        skills: ['Bootstrap'],
+      },
     ],
-    chips: ['Clean UI', 'Responsive', 'Detail-oriented'],
   },
   experience: {
     items: [
       {
-        title: 'React Developer (Professional Experience at VICA)',
-        description:
-          'I trained as a Front-End Developer at VICA using React.js for 3 months. Contributed to developing user interfaces for project management applications.',
+        type: 'experience',
+        title: 'Frontend Developer',
+        organization: 'Freelancer',
+        period: '10/2025 – Present',
+        highlights: [
+          'Develop responsive and professional e-commerce websites for local and outsourcing companies using Next.js, React, and Tailwind CSS.',
+          'Handle practical frontend work such as UI updates, domain setup, deployment support, and website improvements.',
+        ],
       },
       {
-        title: 'Graduation Project (Smart Home System)',
-        description:
-          'Developed a smart home system using IoT concepts, focusing on automation and user control via a web interface.',
+        type: 'experience',
+        title: 'React Developer (Trainee)',
+        organization: 'VICA',
+        period: '04/07/2024 – 04/09/2024',
+        highlights: [
+          'Built and optimized responsive user interface components using React, JavaScript, and Tailwind CSS.',
+          'Worked on real project scenarios, API integration, reusable components, debugging, and frontend performance improvements.',
+          'Collaborated with team members using modern frontend development workflows.',
+        ],
       },
       {
-        title: 'Education',
-        description:
-          'B.Sc. in Computer and Automation Engineering — focused on software fundamentals, automation, and modern web development.',
+        type: 'education',
+        title: 'Bachelor of Computer and Automation Engineering',
+        organization: 'Damascus University',
+        period: '02/09/2020 – 15/07/2025',
+        highlights: [
+          'Built foundations in software development, problem-solving, systems, and engineering principles.',
+        ],
       },
     ],
     values:
-      'I enjoy turning complex ideas into interfaces that feel simple, warm, and intuitive. I focus on spacing, hierarchy, and micro-interactions so the experience feels polished on every screen.',
+      'I value clear component structure, responsive behavior, accessible interactions, and careful delivery across screen sizes.',
   },
   contact: {
     phone: '+963 997 224 089',
     email: 'mernahalla@gmail.com',
     location: 'Damascus, Syria',
-    tip: 'Share your goals, timeline, and links — I’ll respond faster and more accurately.',
+    tip: 'Share your goals, timeline, and relevant links so I can respond with useful next steps.',
   },
   socialLinks: [
-    { label: 'Facebook', href: 'https://www.facebook.com/share/192XgVXPnw/' },
-    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/merna-hallak-a633a636a/' },
-    { label: 'Instagram', href: 'https://www.instagram.com/merna_hallak?igsh=cHNzNzdwb2t0a2Fy' },
+    { kind: 'github', label: 'GitHub', href: 'https://github.com/MernaHallak' },
+    {
+      kind: 'linkedin',
+      label: 'LinkedIn',
+      href: 'https://www.linkedin.com/in/merna-hallak-a633a636a/',
+    },
+    { kind: 'facebook', label: 'Facebook', href: 'https://www.facebook.com/share/192XgVXPnw/' },
+    {
+      kind: 'instagram',
+      label: 'Instagram',
+      href: 'https://www.instagram.com/merna_hallak?igsh=cHNzNzdwb2t0a2Fy',
+    },
   ],
 } as const;
