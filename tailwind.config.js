@@ -5,8 +5,7 @@ const config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-nunito-sans)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        display: ['var(--font-playfair-display)', 'ui-serif', 'Georgia', 'serif'],
+        sans: ['var(--font-manrope)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
       colors: {
         canvas: 'var(--color-canvas)',

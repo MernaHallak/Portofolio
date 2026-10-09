@@ -1,20 +1,16 @@
 import type { Metadata } from 'next';
-import { Nunito_Sans, Playfair_Display } from 'next/font/google';
+import { Manrope } from 'next/font/google';
 import { Footer } from '../components/layout/Footer';
 import { SiteHeader } from '../components/layout/SiteHeader';
 import { ThemeProvider } from '../providers/ThemeProvider';
 import { site } from '../data/site';
 import './globals.css';
 
-const nunitoSans = Nunito_Sans({
-  variable: '--font-nunito-sans',
+const manrope = Manrope({
+  variable: '--font-manrope',
   subsets: ['latin'],
-});
-
-const playfairDisplay = Playfair_Display({
-  variable: '--font-playfair-display',
-  subsets: ['latin'],
-  weight: ['600', '700'],
+  display: 'swap',
+  weight: ['400', '500', '600', '700'],
 });
 
 export const metadata: Metadata = {
@@ -61,7 +57,7 @@ const themeScript = `(() => {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${nunitoSans.variable} ${playfairDisplay.variable} min-h-screen`}>
+      <body className={`${manrope.variable} min-h-screen`}>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <ThemeProvider>
           <SiteHeader />

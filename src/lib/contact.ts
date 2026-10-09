@@ -5,7 +5,13 @@ export type ContactFormValues = {
   message: string;
 };
 
-export type ContactFormErrors = Partial<Record<keyof ContactFormValues, string>>;
+export type ContactFormSubmission = ContactFormValues & {
+  website: string;
+};
+
+export type ContactFormErrors = Partial<Record<keyof ContactFormValues, string>> & {
+  form?: string;
+};
 
 export const emptyContactForm: ContactFormValues = {
   name: '',
@@ -14,32 +20,71 @@ export const emptyContactForm: ContactFormValues = {
   message: '',
 };
 
-export function validateContactForm(values: ContactFormValues): ContactFormErrors {
+function normalizeSingleLine(value: unknown): string {
+  return typeof value === 'string' ? value.trim().replace(/\s+/g, ' ') : '';
+}
+
+function normalizeMessage(value: unknown): string {
+  return typeof value === 'string' ? value.trim().replace(/\r\n?/g, '\n') : '';
+}
+
+export function normalizeContactForm(
+  values: Partial<ContactFormSubmission>,
+): ContactFormSubmission {
+  return {
+    name: normalizeSingleLine(values.name),
+    email: normalizeSingleLine(values.email),
+    phone: normalizeSingleLine(values.phone),
+    message: normalizeMessage(values.message),
+    website: normalizeSingleLine(values.website),
+  };
+}
+
+export function validateContactForm(values: ContactFormSubmission): ContactFormErrors {
   const errors: ContactFormErrors = {};
 
-  if (!values.name.trim()) errors.name = 'Please enter your name.';
-  if (!values.email.trim()) {
+  if (!values.name) {
+    errors.name = 'Please enter your name.';
+  } else if (values.name.length > 100) {
+    errors.name = 'Please keep your name under 100 characters.';
+  }
+
+  if (!values.email) {
     errors.email = 'Please enter your email address.';
-  } else if (!/^\S+@\S+\.\S+$/.test(values.email)) {
+  } else if (values.email.length > 254 || !/^\S+@\S+\.\S+$/.test(values.email)) {
     errors.email = 'Please enter a valid email address.';
   }
-  if (!values.message.trim()) errors.message = 'Please enter a message.';
+
+  if (values.phone && (values.phone.length > 40 || !/^[+\d().\s-]{7,40}$/.test(values.phone))) {
+    errors.phone = 'Please enter a valid phone number.';
+  }
+
+  if (!values.message) {
+    errors.message = 'Please enter a message.';
+  } else if (values.message.length < 10) {
+    errors.message = 'Please add a little more detail to your message.';
+  } else if (values.message.length > 4000) {
+    errors.message = 'Please keep your message under 4,000 characters.';
+  }
+
+  if (values.website) {
+    errors.form = 'Something went wrong. Please try again or email me directly.';
+  }
 
   return errors;
 }
 
-export function createMailtoHref(recipient: string, values: ContactFormValues): string {
+export function buildContactEmailText(values: ContactFormValues): string {
   const body = [
-    `Name: ${values.name.trim()}`,
-    `Email: ${values.email.trim()}`,
-    `Phone: ${values.phone.trim() || 'Not provided'}`,
+    'New portfolio message',
     '',
-    values.message.trim(),
+    `Name: ${values.name}`,
+    `Email: ${values.email}`,
+    `Phone: ${values.phone || 'Not provided'}`,
+    '',
+    'Message:',
+    values.message,
   ].join('\n');
-  const query = new URLSearchParams({
-    subject: 'New message from portfolio',
-    body,
-  });
 
-  return `mailto:${recipient}?${query.toString()}`;
+  return body;
 }

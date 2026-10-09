@@ -1,6 +1,6 @@
 # Merna Portfolio
 
-A personal frontend portfolio for Merna, built with Next.js App Router, React, TypeScript, and Tailwind CSS. The site contains static local portfolio content, project detail routes, a persisted light/dark theme, a local résumé download, and a mail-client contact workflow.
+A personal frontend portfolio for Merna, built with Next.js App Router, React, TypeScript, and Tailwind CSS. The site contains static local portfolio content, project detail routes, a persisted light/dark theme, a local CV download, and a server-side contact email workflow.
 
 ## Requirements
 
@@ -34,7 +34,7 @@ src/
 └── providers/           Persisted client-side theme provider
 public/
 ├── images/              Profile, project, experience, and decorative assets
-└── resume/              Downloadable résumé
+└── resume/              Downloadable CV
 ```
 
 ## Content and projects

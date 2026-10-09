@@ -95,7 +95,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           <div className="mt-8 grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
             <div>
               <p className="section-kicker">Project case study</p>
-              <h1 className="mt-3 font-display text-4xl font-semibold leading-tight tracking-[-0.03em] sm:text-5xl">
+              <h1 className="mt-3 text-4xl font-bold leading-[1.06] tracking-[-0.04em] sm:text-5xl lg:text-[3.25rem]">
                 {project.title}
               </h1>
               {project.summary ? (

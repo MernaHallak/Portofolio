@@ -35,7 +35,7 @@ export function Footer() {
                 /
               </span>
               <a href="/resume/Merna%20Resume.pdf" className="text-link">
-                Résumé
+                Download CV
               </a>
             </div>
           </div>

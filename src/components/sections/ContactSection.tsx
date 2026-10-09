@@ -4,10 +4,11 @@ import { useRef, useState, type ChangeEvent, type FormEvent, type ReactNode } fr
 import { CiLocationOn } from 'react-icons/ci';
 import { IoCallOutline } from 'react-icons/io5';
 import { MdOutlineMailOutline } from 'react-icons/md';
+import { sendContactMessage } from '../../app/actions/contact';
 import { site } from '../../data/site';
 import {
-  createMailtoHref,
   emptyContactForm,
+  normalizeContactForm,
   validateContactForm,
   type ContactFormErrors,
   type ContactFormValues,
@@ -18,30 +19,63 @@ type FieldName = keyof ContactFormValues;
 export function ContactSection() {
   const [values, setValues] = useState<ContactFormValues>(emptyContactForm);
   const [errors, setErrors] = useState<ContactFormErrors>({});
-  const [isOpeningMail, setIsOpeningMail] = useState(false);
+  const [honeypot, setHoneypot] = useState('');
+  const [isSending, setIsSending] = useState(false);
+  const [statusMessage, setStatusMessage] = useState('');
   const fieldRefs = useRef<Partial<Record<FieldName, HTMLInputElement | HTMLTextAreaElement>>>({});
 
   function handleChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     const { name, value } = event.target;
     const field = name as FieldName;
     setValues((currentValues) => ({ ...currentValues, [field]: value }));
-    setErrors((currentErrors) => ({ ...currentErrors, [field]: undefined }));
+    setErrors((currentErrors) => ({ ...currentErrors, [field]: undefined, form: undefined }));
+    setStatusMessage('');
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const nextErrors = validateContactForm(values);
+    const submittedValues = normalizeContactForm({ ...values, website: honeypot });
+    const nextErrors = validateContactForm(submittedValues);
     setErrors(nextErrors);
 
-    const firstInvalidField = (Object.keys(nextErrors) as FieldName[])[0];
+    const firstInvalidField = (
+      Object.keys(nextErrors).filter((field): field is FieldName => field !== 'form') as FieldName[]
+    )[0];
     if (firstInvalidField) {
       fieldRefs.current[firstInvalidField]?.focus();
       return;
     }
 
-    setIsOpeningMail(true);
-    window.location.assign(createMailtoHref(site.contact.email, values));
-    window.setTimeout(() => setIsOpeningMail(false), 2500);
+    setIsSending(true);
+    setStatusMessage('Sending…');
+
+    try {
+      const result = await sendContactMessage(submittedValues);
+
+      if (result.success) {
+        setValues(emptyContactForm);
+        setHoneypot('');
+        setErrors({});
+        setStatusMessage('Message sent successfully.');
+        return;
+      }
+
+      setErrors(result.errors);
+      const invalidField = (
+        Object.keys(result.errors).filter(
+          (field): field is FieldName => field !== 'form',
+        ) as FieldName[]
+      )[0];
+      if (invalidField) {
+        fieldRefs.current[invalidField]?.focus();
+      }
+      setStatusMessage('Something went wrong. Please try again or email me directly.');
+    } catch {
+      setErrors({ form: 'Something went wrong. Please try again or email me directly.' });
+      setStatusMessage('Something went wrong. Please try again or email me directly.');
+    } finally {
+      setIsSending(false);
+    }
   }
 
   const fieldClass = (hasError: boolean) =>
@@ -92,6 +126,30 @@ export function ContactSection() {
 
           <div className="card p-6 sm:p-7">
             <form noValidate onSubmit={handleSubmit} className="space-y-5">
+              <div>
+                <h3 className="text-xl font-extrabold tracking-tight">Send me a message</h3>
+                <p className="mt-2 text-sm leading-6 text-muted">
+                  Use the form for the fastest response. Your message is sent securely from this
+                  website.
+                </p>
+              </div>
+
+              <div
+                aria-hidden="true"
+                className="absolute -left-[10000px] top-auto h-px w-px overflow-hidden"
+              >
+                <label htmlFor="contact-website">Website</label>
+                <input
+                  id="contact-website"
+                  name="website"
+                  type="text"
+                  value={honeypot}
+                  onChange={(event) => setHoneypot(event.target.value)}
+                  autoComplete="off"
+                  tabIndex={-1}
+                />
+              </div>
+
               <div className="grid gap-5 sm:grid-cols-2">
                 <FormField id="contact-name" label="Your name" error={errors.name}>
                   <input
@@ -106,6 +164,7 @@ export function ContactSection() {
                     aria-invalid={Boolean(errors.name)}
                     aria-describedby={errors.name ? 'contact-name-error' : undefined}
                     autoComplete="name"
+                    maxLength={100}
                     className={fieldClass(Boolean(errors.name))}
                   />
                 </FormField>
@@ -122,6 +181,7 @@ export function ContactSection() {
                     aria-invalid={Boolean(errors.email)}
                     aria-describedby={errors.email ? 'contact-email-error' : undefined}
                     autoComplete="email"
+                    maxLength={254}
                     className={fieldClass(Boolean(errors.email))}
                   />
                 </FormField>
@@ -136,7 +196,10 @@ export function ContactSection() {
                   type="tel"
                   value={values.phone}
                   onChange={handleChange}
+                  aria-invalid={Boolean(errors.phone)}
+                  aria-describedby={errors.phone ? 'contact-phone-error' : undefined}
                   autoComplete="tel"
+                  maxLength={40}
                   className={fieldClass(Boolean(errors.phone))}
                 />
               </FormField>
@@ -152,28 +215,33 @@ export function ContactSection() {
                   aria-invalid={Boolean(errors.message)}
                   aria-describedby={errors.message ? 'contact-message-error' : undefined}
                   rows={5}
+                  maxLength={4000}
                   className={`${fieldClass(Boolean(errors.message))} resize-y`}
                 />
               </FormField>
 
               <div className="flex flex-wrap items-center gap-4">
-                <button type="submit" className="btn-primary" disabled={isOpeningMail}>
-                  {isOpeningMail ? 'Opening email app…' : 'Prepare email'}
+                <button type="submit" className="btn-primary" disabled={isSending}>
+                  {isSending ? 'Sending…' : 'Send Message'}
                 </button>
                 <p className="text-sm leading-6 text-muted" aria-live="polite" role="status">
-                  {isOpeningMail
-                    ? 'A pre-filled draft is opening. You remain in control of sending it.'
-                    : 'This uses your email app; it does not send automatically.'}
+                  {statusMessage || 'Messages are sent securely through this form.'}
                 </p>
               </div>
 
-              <p className="text-sm text-muted">
-                Prefer email?{' '}
+              {errors.form ? (
+                <p className="text-sm font-bold text-red-700 dark:text-red-300" role="alert">
+                  {errors.form}
+                </p>
+              ) : null}
+
+              <div className="border-t border-line pt-5">
+                <p className="font-extrabold">Email me directly</p>
+                <p className="mt-1 text-sm text-muted">Prefer your own email app? </p>
                 <a href={`mailto:${site.contact.email}`} className="text-link">
-                  Write directly to {site.contact.email}
+                  {site.contact.email}
                 </a>
-                .
-              </p>
+              </div>
             </form>
           </div>
         </div>

@@ -6,6 +6,124 @@ export const navigationItems = [
   { label: 'Contact', id: 'contact' },
 ] as const;
 
+export const skillGroups = [
+  { id: 'primary', title: 'Primary stack' },
+  { id: 'architecture', title: 'APIs & frontend architecture' },
+  { id: 'workflow', title: 'Tools & workflow' },
+  { id: 'supporting', title: 'Supporting' },
+] as const;
+
+export type SkillGroupId = (typeof skillGroups)[number]['id'];
+
+export type SkillIconKey =
+  | 'react'
+  | 'nextjs'
+  | 'javascript'
+  | 'tailwind'
+  | 'rest'
+  | 'context'
+  | 'axios'
+  | 'git'
+  | 'github'
+  | 'github-actions'
+  | 'postman'
+  | 'bootstrap';
+
+export type Skill = {
+  id: string;
+  name: string;
+  group: SkillGroupId;
+  icon: SkillIconKey;
+  prominence: 'featured' | 'medium' | 'supporting';
+};
+
+export const skills = [
+  {
+    id: 'react',
+    name: 'React',
+    group: 'primary',
+    icon: 'react',
+    prominence: 'featured',
+  },
+  {
+    id: 'nextjs',
+    name: 'Next.js',
+    group: 'primary',
+    icon: 'nextjs',
+    prominence: 'featured',
+  },
+  {
+    id: 'javascript',
+    name: 'JavaScript',
+    group: 'primary',
+    icon: 'javascript',
+    prominence: 'featured',
+  },
+  {
+    id: 'tailwind-css',
+    name: 'Tailwind CSS',
+    group: 'primary',
+    icon: 'tailwind',
+    prominence: 'featured',
+  },
+  {
+    id: 'rest-apis',
+    name: 'REST APIs',
+    group: 'architecture',
+    icon: 'rest',
+    prominence: 'medium',
+  },
+  {
+    id: 'context-api',
+    name: 'Context API',
+    group: 'architecture',
+    icon: 'context',
+    prominence: 'supporting',
+  },
+  {
+    id: 'axios',
+    name: 'Axios',
+    group: 'architecture',
+    icon: 'axios',
+    prominence: 'medium',
+  },
+  {
+    id: 'git',
+    name: 'Git',
+    group: 'workflow',
+    icon: 'git',
+    prominence: 'medium',
+  },
+  {
+    id: 'github',
+    name: 'GitHub',
+    group: 'workflow',
+    icon: 'github',
+    prominence: 'medium',
+  },
+  {
+    id: 'github-actions',
+    name: 'GitHub Actions',
+    group: 'workflow',
+    icon: 'github-actions',
+    prominence: 'supporting',
+  },
+  {
+    id: 'postman',
+    name: 'Postman',
+    group: 'workflow',
+    icon: 'postman',
+    prominence: 'supporting',
+  },
+  {
+    id: 'bootstrap',
+    name: 'Bootstrap',
+    group: 'supporting',
+    icon: 'bootstrap',
+    prominence: 'supporting',
+  },
+] as const satisfies readonly Skill[];
+
 export const site = {
   name: 'Merna Hallak',
   title: 'Merna Hallak | Frontend Developer',
@@ -15,30 +133,12 @@ export const site = {
     greeting: 'Hi, I’m',
     description:
       'I build responsive web interfaces with React, Next.js, and Tailwind CSS, turning product requirements into clear, accessible experiences.',
-    chips: ['React', 'Next.js', 'Tailwind CSS', 'REST APIs'],
+    skillIds: ['react', 'nextjs', 'tailwind-css', 'rest-apis'],
     availability: 'Available for opportunities',
   },
   about: {
     description:
       'I’m a Frontend Developer and Computer and Automation Engineering graduate. I build responsive websites with React, Next.js, and Tailwind CSS, and support practical delivery work from interface updates to deployment.',
-    skillGroups: [
-      {
-        title: 'Primary stack',
-        skills: ['React', 'Next.js', 'JavaScript', 'Tailwind CSS'],
-      },
-      {
-        title: 'APIs & frontend architecture',
-        skills: ['REST APIs', 'Context API', 'Axios'],
-      },
-      {
-        title: 'Tools & workflow',
-        skills: ['Git', 'GitHub', 'GitHub Actions', 'Postman'],
-      },
-      {
-        title: 'Supporting',
-        skills: ['Bootstrap'],
-      },
-    ],
   },
   experience: {
     items: [

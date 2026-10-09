@@ -1,9 +1,14 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { FiArrowDownRight, FiDownload, FiMail } from 'react-icons/fi';
-import { site } from '../../data/site';
+import { site, skills } from '../../data/site';
 
 export function HeroSection() {
+  const heroSkills = site.hero.skillIds.flatMap((id) => {
+    const skill = skills.find((item) => item.id === id);
+    return skill ? [skill] : [];
+  });
+
   return (
     <section
       id="hero"
@@ -15,7 +20,7 @@ export function HeroSection() {
         <div className="grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
           <div className="text-center lg:text-left">
             <p className="section-kicker">{site.hero.role}</p>
-            <h1 className="mt-3 font-display text-4xl font-semibold leading-[1.06] tracking-[-0.035em] sm:mt-4 sm:text-5xl lg:text-[3.5rem]">
+            <h1 className="mt-3 text-[2.5rem] font-bold leading-[1.03] tracking-[-0.045em] sm:mt-4 sm:text-[3.25rem] lg:text-[3.75rem]">
               {site.hero.greeting} <span className="text-accent">Merna</span>.
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-muted sm:mt-5 sm:text-lg sm:leading-8 lg:mx-0 lg:max-w-xl">
@@ -23,9 +28,9 @@ export function HeroSection() {
             </p>
 
             <div className="mt-5 flex flex-wrap items-center justify-center gap-1.5 sm:mt-6 sm:gap-2 lg:justify-start">
-              {site.hero.chips.map((chip) => (
-                <span key={chip} className="chip px-2.5 text-[13px] sm:px-3 sm:text-sm">
-                  {chip}
+              {heroSkills.map((skill) => (
+                <span key={skill.id} className="chip px-2.5 text-[13px] sm:px-3 sm:text-sm">
+                  {skill.name}
                 </span>
               ))}
             </div>
@@ -39,10 +44,10 @@ export function HeroSection() {
               </Link>
               <a
                 href="/resume/Merna%20Resume.pdf"
-                download="Merna_Resume.pdf"
+                download="Merna_CV.pdf"
                 className="text-link inline-flex min-h-11 items-center gap-1.5 px-2 text-sm"
               >
-                Résumé <FiDownload aria-hidden="true" />
+                Download CV <FiDownload aria-hidden="true" />
               </a>
             </div>
           </div>
