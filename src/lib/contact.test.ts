@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { buildContactEmailText, normalizeContactForm, validateContactForm } from './contact';
+import { normalizeContactForm, validateContactForm } from './contact';
 
 const validValues = {
   name: 'Alex Example',
@@ -30,7 +30,7 @@ describe('contact helpers', () => {
     });
   });
 
-  it('normalizes values and creates a clear email body without calling a provider', () => {
+  it('normalizes values before the browser submits them to Web3Forms', () => {
     const values = normalizeContactForm({
       ...validValues,
       name: '  Alex   Example ',
@@ -41,7 +41,6 @@ describe('contact helpers', () => {
       name: 'Alex Example',
       message: 'Hello Merna!\nThanks.',
     });
-    expect(buildContactEmailText(values)).toContain('Name: Alex Example');
-    expect(buildContactEmailText(values)).toContain('Message:\nHello Merna!\nThanks.');
+    expect(values.email).toBe('alex@example.com');
   });
 });
