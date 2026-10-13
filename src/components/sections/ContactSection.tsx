@@ -1,11 +1,12 @@
 'use client';
 
 import { useRef, useState, type ChangeEvent, type FormEvent, type ReactNode } from 'react';
+import HCaptcha, { type HCaptcha as HCaptchaInstance } from '@hcaptcha/react-hcaptcha';
 import { CiLocationOn } from 'react-icons/ci';
 import { IoCallOutline } from 'react-icons/io5';
 import { MdOutlineMailOutline } from 'react-icons/md';
-import { sendContactMessage } from '../../app/actions/contact';
 import { site } from '../../data/site';
+import { useTheme } from '../../providers/ThemeProvider';
 import {
   emptyContactForm,
   normalizeContactForm,
@@ -15,14 +16,24 @@ import {
 } from '../../lib/contact';
 
 type FieldName = keyof ContactFormValues;
+const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit';
+const WEB3FORMS_HCAPTCHA_SITE_KEY = '50b2fe65-b00b-4b9e-ad62-3ba471098be2';
+const WEB3FORMS_ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
+
+type Web3FormsResponse = {
+  success?: boolean;
+};
 
 export function ContactSection() {
+  const { theme } = useTheme();
   const [values, setValues] = useState<ContactFormValues>(emptyContactForm);
   const [errors, setErrors] = useState<ContactFormErrors>({});
   const [honeypot, setHoneypot] = useState('');
+  const [captchaToken, setCaptchaToken] = useState('');
   const [isSending, setIsSending] = useState(false);
   const [statusMessage, setStatusMessage] = useState('');
   const fieldRefs = useRef<Partial<Record<FieldName, HTMLInputElement | HTMLTextAreaElement>>>({});
+  const captchaRef = useRef<HCaptchaInstance>(null);
 
   function handleChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     const { name, value } = event.target;
@@ -46,30 +57,50 @@ export function ContactSection() {
       return;
     }
 
+    if (!WEB3FORMS_ACCESS_KEY) {
+      setErrors({ form: 'The contact form is not configured. Please email me directly.' });
+      setStatusMessage('The contact form is not configured. Please email me directly.');
+      return;
+    }
+
+    if (!captchaToken) {
+      setErrors({ form: 'Please complete the hCaptcha verification before sending your message.' });
+      setStatusMessage('Please complete the hCaptcha verification before sending your message.');
+      return;
+    }
+
     setIsSending(true);
     setStatusMessage('Sending…');
 
     try {
-      const result = await sendContactMessage(submittedValues);
+      const formData = new FormData();
+      formData.append('access_key', WEB3FORMS_ACCESS_KEY);
+      formData.append('from_name', 'Merna Portfolio');
+      formData.append('subject', 'New message from Merna Portfolio');
+      formData.append('name', submittedValues.name);
+      formData.append('email', submittedValues.email);
+      formData.append('replyto', submittedValues.email);
+      formData.append('phone', submittedValues.phone);
+      formData.append('message', submittedValues.message);
+      formData.append('h-captcha-response', captchaToken);
 
-      if (result.success) {
-        setValues(emptyContactForm);
-        setHoneypot('');
-        setErrors({});
-        setStatusMessage('Message sent successfully.');
-        return;
+      const response = await fetch(WEB3FORMS_ENDPOINT, {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: formData,
+      });
+      const result = (await response.json()) as Web3FormsResponse;
+
+      if (!response.ok || !result.success) {
+        throw new Error('Web3Forms rejected the submission.');
       }
 
-      setErrors(result.errors);
-      const invalidField = (
-        Object.keys(result.errors).filter(
-          (field): field is FieldName => field !== 'form',
-        ) as FieldName[]
-      )[0];
-      if (invalidField) {
-        fieldRefs.current[invalidField]?.focus();
-      }
-      setStatusMessage('Something went wrong. Please try again or email me directly.');
+      setValues(emptyContactForm);
+      setHoneypot('');
+      setCaptchaToken('');
+      captchaRef.current?.resetCaptcha();
+      setErrors({});
+      setStatusMessage('Message sent successfully. I’ll get back to you soon.');
     } catch {
       setErrors({ form: 'Something went wrong. Please try again or email me directly.' });
       setStatusMessage('Something went wrong. Please try again or email me directly.');
@@ -219,6 +250,33 @@ export function ContactSection() {
                   className={`${fieldClass(Boolean(errors.message))} resize-y`}
                 />
               </FormField>
+
+              <div>
+                <p className="mb-2 text-sm font-extrabold">Security check</p>
+                <HCaptcha
+                  ref={captchaRef}
+                  sitekey={WEB3FORMS_HCAPTCHA_SITE_KEY}
+                  reCaptchaCompat={false}
+                  theme={theme}
+                  onVerify={(token) => {
+                    setCaptchaToken(token);
+                    setErrors((currentErrors) => ({ ...currentErrors, form: undefined }));
+                    setStatusMessage('');
+                  }}
+                  onExpire={() => {
+                    setCaptchaToken('');
+                    setErrors({
+                      form: 'The hCaptcha verification expired. Please complete it again.',
+                    });
+                  }}
+                  onError={() => {
+                    setCaptchaToken('');
+                    setErrors({
+                      form: 'hCaptcha could not load. Please refresh the page and try again.',
+                    });
+                  }}
+                />
+              </div>
 
               <div className="flex flex-wrap items-center gap-4">
                 <button type="submit" className="btn-primary" disabled={isSending}>

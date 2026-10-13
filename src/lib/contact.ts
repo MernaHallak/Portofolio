@@ -73,18 +73,3 @@ export function validateContactForm(values: ContactFormSubmission): ContactFormE
 
   return errors;
 }
-
-export function buildContactEmailText(values: ContactFormValues): string {
-  const body = [
-    'New portfolio message',
-    '',
-    `Name: ${values.name}`,
-    `Email: ${values.email}`,
-    `Phone: ${values.phone || 'Not provided'}`,
-    '',
-    'Message:',
-    values.message,
-  ].join('\n');
-
-  return body;
-}

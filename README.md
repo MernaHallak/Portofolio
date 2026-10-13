@@ -1,6 +1,6 @@
 # Merna Portfolio
 
-A personal frontend portfolio for Merna, built with Next.js App Router, React, TypeScript, and Tailwind CSS. The site contains static local portfolio content, project detail routes, a persisted light/dark theme, a local CV download, and a server-side contact email workflow.
+A personal frontend portfolio for Merna, built with Next.js App Router, React, TypeScript, and Tailwind CSS. The site contains static local portfolio content, project detail routes, a persisted light/dark theme, a local CV download, and a Web3Forms contact workflow.
 
 ## Requirements
 
@@ -53,7 +53,7 @@ No route, grid, carousel, API, database, or CMS update is required.
 
 The application-wide theme provider saves the selected mode in browser local storage under `merna-portfolio-theme`. The document applies the saved theme before hydration to reduce initial flashing.
 
-The contact form validates locally and opens the visitor's configured email application with a pre-filled `mailto:` draft addressed to the portfolio email. It does not submit data to a third party or claim that a message has been sent.
+The contact form validates locally, requires Web3Forms hCaptcha verification, and submits directly to Web3Forms without navigating away. Configure `NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY` in `.env.local` locally and in the Vercel project environment variables for deployed builds. The access key is intentionally browser-visible, while the recipient email remains configured in Web3Forms.
 
 ## Deployment notes
 
