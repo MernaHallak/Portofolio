@@ -12,10 +12,8 @@ export function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative scroll-mt-24 overflow-hidden border-b border-line bg-surface pt-[68px]"
+      className="relative scroll-mt-24 overflow-hidden border-b border-line bg-surface bg-[radial-gradient(ellipse_80%_100%_at_78%_20%,var(--color-accent-soft),transparent_74%)] pt-[68px]"
     >
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-56 bg-[radial-gradient(circle_at_78%_20%,var(--color-accent-soft),transparent_58%)]" />
-
       <div className="section relative py-10 sm:py-16 lg:py-24">
         <div className="grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
           <div className="text-center lg:text-left">

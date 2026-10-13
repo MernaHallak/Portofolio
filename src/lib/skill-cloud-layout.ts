@@ -66,13 +66,13 @@ export function createSkillCloudLayout(
 
   if (!items.length || width <= 0 || height <= 0) return [];
 
-  const isMobile = height <= 340;
+  const isMobile = height <= 380;
   const containerPadding = Math.max(16, Math.min(width, height) * 0.045);
   const availableWidth = Math.max(1, width - containerPadding * 2);
   const availableHeight = Math.max(1, height - containerPadding * 2);
   const densityRadius = Math.max(
     18,
-    Math.sqrt((availableWidth * availableHeight) / items.length) * 0.32,
+    Math.sqrt((availableWidth * availableHeight) / items.length) * 0.35,
   );
   const boundaryHalo = isMobile ? 11 : 13;
   const collisionGap = isMobile ? 5 : 8;
@@ -101,7 +101,7 @@ export function createSkillCloudLayout(
   };
 
   const resolveCollisions = () => {
-    for (let iteration = 0; iteration < 120; iteration += 1) {
+    for (let iteration = 0; iteration < 180; iteration += 1) {
       for (let index = 0; index < nodes.length; index += 1) {
         const first = nodes[index];
 

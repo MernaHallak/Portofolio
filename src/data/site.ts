@@ -7,10 +7,11 @@ export const navigationItems = [
 ] as const;
 
 export const skillGroups = [
-  { id: 'primary', title: 'Primary stack' },
-  { id: 'architecture', title: 'APIs & frontend architecture' },
-  { id: 'workflow', title: 'Tools & workflow' },
-  { id: 'supporting', title: 'Supporting' },
+  { id: 'primary', title: 'Primary Stack' },
+  { id: 'architecture', title: 'Frontend Architecture & Forms' },
+  { id: 'services', title: 'APIs & Services' },
+  { id: 'design', title: 'Design & UI' },
+  { id: 'delivery', title: 'Tools & Delivery' },
 ] as const;
 
 export type SkillGroupId = (typeof skillGroups)[number]['id'];
@@ -27,7 +28,14 @@ export type SkillIconKey =
   | 'github'
   | 'github-actions'
   | 'postman'
-  | 'bootstrap';
+  | 'bootstrap'
+  | 'figma'
+  | 'vite'
+  | 'cloudinary'
+  | 'react-hook-form'
+  | 'zod'
+  | 'shadcn-ui'
+  | 'vercel';
 
 export type Skill = {
   id: string;
@@ -69,7 +77,7 @@ export const skills = [
   {
     id: 'rest-apis',
     name: 'REST APIs',
-    group: 'architecture',
+    group: 'services',
     icon: 'rest',
     prominence: 'medium',
   },
@@ -81,46 +89,95 @@ export const skills = [
     prominence: 'supporting',
   },
   {
+    id: 'react-hook-form',
+    name: 'React Hook Form',
+    group: 'architecture',
+    icon: 'react-hook-form',
+    prominence: 'medium',
+  },
+  {
+    id: 'zod',
+    name: 'Zod',
+    group: 'architecture',
+    icon: 'zod',
+    prominence: 'supporting',
+  },
+  {
     id: 'axios',
     name: 'Axios',
-    group: 'architecture',
+    group: 'services',
     icon: 'axios',
+    prominence: 'medium',
+  },
+  {
+    id: 'cloudinary',
+    name: 'Cloudinary',
+    group: 'services',
+    icon: 'cloudinary',
+    prominence: 'supporting',
+  },
+  {
+    id: 'shadcn-ui',
+    name: 'shadcn/ui',
+    group: 'design',
+    icon: 'shadcn-ui',
+    prominence: 'supporting',
+  },
+  {
+    id: 'bootstrap',
+    name: 'Bootstrap',
+    group: 'design',
+    icon: 'bootstrap',
+    prominence: 'supporting',
+  },
+  {
+    id: 'figma',
+    name: 'Figma',
+    group: 'design',
+    icon: 'figma',
     prominence: 'medium',
   },
   {
     id: 'git',
     name: 'Git',
-    group: 'workflow',
+    group: 'delivery',
     icon: 'git',
     prominence: 'medium',
   },
   {
     id: 'github',
     name: 'GitHub',
-    group: 'workflow',
+    group: 'delivery',
     icon: 'github',
     prominence: 'medium',
   },
   {
     id: 'github-actions',
     name: 'GitHub Actions',
-    group: 'workflow',
+    group: 'delivery',
     icon: 'github-actions',
     prominence: 'supporting',
   },
   {
     id: 'postman',
     name: 'Postman',
-    group: 'workflow',
+    group: 'delivery',
     icon: 'postman',
     prominence: 'supporting',
   },
   {
-    id: 'bootstrap',
-    name: 'Bootstrap',
-    group: 'supporting',
-    icon: 'bootstrap',
-    prominence: 'supporting',
+    id: 'vite',
+    name: 'Vite',
+    group: 'delivery',
+    icon: 'vite',
+    prominence: 'medium',
+  },
+  {
+    id: 'vercel',
+    name: 'Vercel',
+    group: 'delivery',
+    icon: 'vercel',
+    prominence: 'medium',
   },
 ] as const satisfies readonly Skill[];
 

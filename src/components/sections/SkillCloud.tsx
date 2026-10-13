@@ -7,6 +7,8 @@ import type { IconType } from 'react-icons';
 import {
   SiAxios,
   SiBootstrap,
+  SiCloudinary,
+  SiFigma,
   SiGit,
   SiGithub,
   SiGithubactions,
@@ -14,7 +16,12 @@ import {
   SiNextdotjs,
   SiPostman,
   SiReact,
+  SiReacthookform,
+  SiShadcnui,
   SiTailwindcss,
+  SiVercel,
+  SiVite,
+  SiZod,
 } from 'react-icons/si';
 import { skills, type SkillIconKey } from '../../data/site';
 import { createSkillCloudLayout, type SkillCloudPosition } from '../../lib/skill-cloud-layout';
@@ -25,7 +32,7 @@ type IconConfig = {
   glow: string;
 };
 
-const iconRegistry: Record<SkillIconKey, IconConfig> = {
+export const skillIconRegistry: Record<SkillIconKey, IconConfig> = {
   react: { Icon: SiReact, className: 'text-cyan-500 dark:text-cyan-300', glow: '#38bdf8' },
   nextjs: { Icon: SiNextdotjs, className: 'text-ink', glow: '#a8a29e' },
   javascript: {
@@ -54,6 +61,21 @@ const iconRegistry: Record<SkillIconKey, IconConfig> = {
     className: 'text-violet-600 dark:text-violet-300',
     glow: '#8b5cf6',
   },
+  figma: { Icon: SiFigma, className: 'text-rose-500 dark:text-rose-300', glow: '#f24e1e' },
+  vite: { Icon: SiVite, className: 'text-violet-500 dark:text-violet-300', glow: '#646cff' },
+  cloudinary: {
+    Icon: SiCloudinary,
+    className: 'text-sky-600 dark:text-sky-300',
+    glow: '#38bdf8',
+  },
+  'react-hook-form': {
+    Icon: SiReacthookform,
+    className: 'text-rose-500 dark:text-rose-300',
+    glow: '#f43f5e',
+  },
+  zod: { Icon: SiZod, className: 'text-blue-600 dark:text-blue-300', glow: '#60a5fa' },
+  'shadcn-ui': { Icon: SiShadcnui, className: 'text-ink', glow: '#a8a29e' },
+  vercel: { Icon: SiVercel, className: 'text-ink', glow: '#a8a29e' },
 };
 
 export function SkillCloud() {
@@ -104,7 +126,7 @@ export function SkillCloud() {
       aria-hidden="true"
     >
       {skills.map((skill) => {
-        const { Icon, className, glow } = iconRegistry[skill.icon];
+        const { Icon, className, glow } = skillIconRegistry[skill.icon];
         const position = positionsById.get(skill.id);
 
         return (

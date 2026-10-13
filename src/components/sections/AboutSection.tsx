@@ -31,8 +31,13 @@ export function AboutSection() {
           </div>
 
           <div className="mt-7 grid gap-x-8 gap-y-7 sm:grid-cols-2">
-            {skillGroups.map((group) => (
-              <div key={group.id} className="border-l-2 border-accent pl-4">
+            {skillGroups.map((group, index) => (
+              <div
+                key={group.id}
+                className={`border-l-2 border-accent pl-4 ${
+                  index === skillGroups.length - 1 ? 'sm:col-span-2' : ''
+                }`}
+              >
                 <h4 className="text-base font-extrabold text-ink">{group.title}</h4>
                 <ul className="mt-3 flex flex-wrap gap-2" aria-label={group.title}>
                   {skills

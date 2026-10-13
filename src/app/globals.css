@@ -209,13 +209,13 @@
 
 @media (max-width: 1023px) {
   .skill-cloud {
-    height: 21rem;
+    height: 23rem;
   }
 }
 
 @media (max-width: 520px) {
   .skill-cloud {
-    height: 20rem;
+    height: 22rem;
     border-radius: 2rem;
   }
 }
