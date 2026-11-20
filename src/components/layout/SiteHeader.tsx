@@ -62,7 +62,7 @@ export function SiteHeader() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-line bg-canvas shadow-sm">
-      <div className="mx-auto flex h-[68px] w-full max-w-7xl items-center justify-between px-5 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-[68px] w-full max-w-[1600px] items-center justify-between px-5 sm:px-6 lg:px-8">
         <div className="flex items-center gap-3">
           <button
             ref={menuButtonRef}
@@ -114,7 +114,7 @@ export function SiteHeader() {
       {isOpen ? (
         <div className="border-t border-line bg-canvas lg:hidden" id="mobile-navigation">
           <nav
-            className="mx-auto w-full max-w-7xl px-5 py-4 sm:px-6"
+            className="mx-auto w-full max-w-[1600px] px-5 py-4 sm:px-6"
             aria-label="Mobile navigation"
           >
             <ul className="space-y-1">
