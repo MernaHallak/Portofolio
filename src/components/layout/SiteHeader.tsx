@@ -80,7 +80,7 @@ export function SiteHeader() {
             onClick={(event) => scrollToSection(event, 'hero')}
             className="rounded-sm text-lg font-extrabold tracking-tight sm:text-xl"
           >
-            Merna<span className="text-accent">.</span>
+            Merna
           </Link>
         </div>
 

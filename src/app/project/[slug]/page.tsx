@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
-import Image from 'next/image';
 import Link from 'next/link';
 import { notFound, permanentRedirect } from 'next/navigation';
 import { FiArrowLeft, FiArrowUpRight, FiGithub } from 'react-icons/fi';
 import { ProjectCard } from '../../../components/projects/ProjectCard';
+import { ProjectImageGallery } from '../../../components/projects/ProjectImageGallery';
 import type { Project } from '../../../data/projects';
 import {
   getProjectByLegacyId,
@@ -73,8 +73,11 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   }
 
   const coverImage = project.images?.[0];
-  const galleryImages = project.images?.slice(1) ?? [];
   const overview = project.overview ?? project.description ?? project.summary;
+  const overviewParagraphs = overview
+    ?.split(/\n\s*\n/)
+    .map((paragraph) => paragraph.trim())
+    .filter(Boolean);
   const details = [
     project.role ? { label: 'Role', value: project.role } : null,
     project.status ? { label: 'Status', value: project.status } : null,
@@ -87,19 +90,32 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   return (
     <>
       <section className="border-b border-line bg-surface pt-[68px]">
-        <div className="section py-12 sm:py-16">
+        <div className="section py-10 sm:py-14 lg:py-16">
           <Link href="/#projects" className="text-link inline-flex min-h-11 items-center gap-2">
             <FiArrowLeft aria-hidden="true" /> Back to projects
           </Link>
 
-          <div className="mt-8 grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
-            <div>
+          <div className="mt-7 grid gap-8 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:items-start lg:gap-12">
+            <div className="max-w-2xl lg:pt-2">
               <p className="section-kicker">Project case study</p>
               <h1 className="mt-3 text-4xl font-bold leading-[1.06] tracking-[-0.04em] sm:text-5xl lg:text-[3.25rem]">
                 {project.title}
               </h1>
               {project.summary ? (
                 <p className="mt-5 text-lg leading-8 text-muted">{project.summary}</p>
+              ) : null}
+
+              {project.tools?.length ? (
+                <div className="mt-6">
+                  <p className="text-sm font-bold text-muted">Tools &amp; stack</p>
+                  <ul className="mt-3 flex flex-wrap gap-2">
+                    {project.tools.map((tool) => (
+                      <li key={tool} className="meta-pill">
+                        {tool}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               ) : null}
 
               <div className="mt-7 flex flex-wrap gap-3">
@@ -127,38 +143,26 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             </div>
 
             {coverImage ? (
-              <figure className="overflow-hidden rounded-2xl border border-line bg-mutedSurface shadow-lift">
-                <div className="relative aspect-[16/10]">
-                  <Image
-                    src={coverImage.src}
-                    alt={coverImage.alt ?? `${project.title} project preview`}
-                    fill
-                    priority
-                    sizes="(max-width: 1024px) 100vw, 60vw"
-                    className="object-contain p-3 sm:p-5"
-                  />
-                </div>
-                {coverImage.caption ? (
-                  <figcaption className="border-t border-line px-5 py-3 text-sm text-muted">
-                    {coverImage.caption}
-                  </figcaption>
-                ) : null}
-              </figure>
+              <ProjectImageGallery images={project.images ?? []} projectTitle={project.title} />
             ) : null}
           </div>
         </div>
       </section>
 
       <section className="section">
-        <div className="grid gap-10 lg:grid-cols-[1fr_320px] lg:gap-16">
-          <div>
-            {overview ? (
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(280px,360px)] lg:items-start lg:gap-14">
+          <div className="max-w-3xl">
+            {overviewParagraphs?.length ? (
               <section aria-labelledby="project-overview">
                 <p className="section-kicker">Overview</p>
                 <h2 id="project-overview" className="mt-3 text-2xl font-extrabold sm:text-3xl">
                   About the project
                 </h2>
-                <p className="mt-5 whitespace-pre-line text-lg leading-8 text-muted">{overview}</p>
+                <div className="mt-5 max-w-[68ch] space-y-5 text-[1.0625rem] leading-8 text-muted">
+                  {overviewParagraphs.map((paragraph) => (
+                    <p key={paragraph}>{paragraph}</p>
+                  ))}
+                </div>
               </section>
             ) : null}
 
@@ -175,9 +179,13 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                   {project.features.map((feature) => (
                     <li
                       key={feature}
-                      className="rounded-xl border border-line bg-surface p-4 leading-7"
+                      className="flex gap-3 rounded-xl border border-line bg-surface p-4 leading-7"
                     >
-                      {feature}
+                      <span
+                        aria-hidden="true"
+                        className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent"
+                      />
+                      <span>{feature}</span>
                     </li>
                   ))}
                 </ul>
@@ -186,7 +194,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           </div>
 
           {details.length > 0 || project.tools?.length ? (
-            <aside className="h-fit rounded-2xl border border-line bg-elevated p-6">
+            <aside className="h-fit rounded-2xl border border-line bg-elevated p-6 shadow-soft lg:sticky lg:top-24">
               <h2 className="text-lg font-extrabold">Project details</h2>
               {details.length > 0 ? (
                 <dl className="mt-5 space-y-4">
@@ -217,38 +225,6 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             </aside>
           ) : null}
         </div>
-
-        {galleryImages.length > 0 ? (
-          <section className="mt-16 border-t border-line pt-12" aria-labelledby="project-gallery">
-            <p className="section-kicker">Gallery</p>
-            <h2 id="project-gallery" className="mt-3 text-2xl font-extrabold sm:text-3xl">
-              More project views
-            </h2>
-            <div className="mt-7 grid gap-6 md:grid-cols-2">
-              {galleryImages.map((image) => (
-                <figure
-                  key={image.src}
-                  className="overflow-hidden rounded-2xl border border-line bg-surface"
-                >
-                  <div className="relative aspect-video bg-mutedSurface">
-                    <Image
-                      src={image.src}
-                      alt={image.alt ?? `${project.title} project screenshot`}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 50vw"
-                      className="object-contain p-3"
-                    />
-                  </div>
-                  {image.caption ? (
-                    <figcaption className="border-t border-line px-5 py-3 text-sm text-muted">
-                      {image.caption}
-                    </figcaption>
-                  ) : null}
-                </figure>
-              ))}
-            </div>
-          </section>
-        ) : null}
       </section>
 
       {relatedProjects.length > 0 ? (

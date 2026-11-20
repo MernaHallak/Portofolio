@@ -1,5 +1,12 @@
 import { describe, expect, it } from 'vitest';
-import { getProjectBySlug, getProjects, getRelatedProjects } from './projects';
+import { projects } from '../data/projects';
+import {
+  getProjectByLegacyId,
+  getProjectBySlug,
+  getFeaturedProjects,
+  getProjects,
+  getRelatedProjects,
+} from './projects';
 import { normalizeExternalUrl } from './urls';
 
 describe('project catalog', () => {
@@ -40,5 +47,24 @@ describe('project catalog', () => {
     expect(
       getRelatedProjects(firstProject.slug).some((project) => project.slug === firstProject.slug),
     ).toBe(false);
+  });
+
+  it('keeps archived projects in data but excludes them from public discovery', () => {
+    const archivedProjects = projects.filter((project) => project.archived);
+
+    expect(archivedProjects.map((project) => project.slug)).toEqual([
+      'dashstack',
+      'edujar',
+      'products',
+    ]);
+    expect(getProjects().map((project) => project.slug)).toEqual(['portfolio']);
+    expect(getFeaturedProjects().map((project) => project.slug)).toEqual(['portfolio']);
+    expect(getRelatedProjects('portfolio')).toEqual([]);
+
+    archivedProjects.forEach((project) => {
+      expect(getProjects()).not.toContainEqual(project);
+      expect(getProjectBySlug(project.slug)).toBeUndefined();
+      expect(project.legacyId && getProjectByLegacyId(project.legacyId)).toBeUndefined();
+    });
   });
 });

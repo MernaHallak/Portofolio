@@ -22,6 +22,7 @@ export type Project = {
   liveUrl?: string;
   githubUrl?: string;
   featured?: boolean;
+  archived?: boolean;
   order?: number;
 };
 
@@ -43,6 +44,7 @@ Clean, fast, and easy to navigate.`,
     ],
     liveUrl: 'https://dash-stack-delta.vercel.app/',
     githubUrl: 'https://github.com/MernaHallak',
+    archived: true,
   },
   {
     slug: 'edujar',
@@ -62,18 +64,22 @@ Key Features:
     ],
     liveUrl: 'https://edujar-merna.vercel.app',
     githubUrl: 'https://github.com/MernaHallak',
+    archived: true,
   },
   {
     slug: 'portfolio',
     legacyId: '3',
     title: 'Portfolio',
     summary: 'React + Tailwind CSS',
-    description: `A personal portfolio website to showcase projects and skills, built with modern tech like React.js and Tailwind CSS for full responsiveness. Features a sleek interface with project filtering by category.
-
-Highlights:
-✅ Interactive project gallery ✅ Flawless cross-device browsing ✅ Easy content updates`,
+    description:
+      'A personal portfolio website to showcase projects and skills, built with modern tech like React.js and Tailwind CSS for full responsiveness. Features a sleek interface with project filtering by category.',
     date: '2-11-2024',
     tools: ['React.js', 'Tailwind.CSS'],
+    features: [
+      'Interactive project gallery',
+      'Flawless cross-device browsing',
+      'Easy content updates',
+    ],
     images: [
       {
         src: '/images/projects/portfolio/cover.png',
@@ -98,5 +104,6 @@ Highlights:
     ],
     liveUrl: 'https://products-inky-pi.vercel.app/',
     githubUrl: 'https://github.com/MernaHallak',
+    archived: true,
   },
 ];

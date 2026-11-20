@@ -4,6 +4,10 @@ import { ProjectCard } from '../projects/ProjectCard';
 
 export function PortfolioSection() {
   const projects = getFeaturedProjects();
+  const projectGridClass =
+    projects.length === 1
+      ? 'mx-auto mt-10 grid max-w-xl gap-6'
+      : 'mt-10 grid gap-6 sm:grid-cols-2 xl:grid-cols-3';
 
   return (
     <section id="projects" className="section">
@@ -21,7 +25,7 @@ export function PortfolioSection() {
         </Link>
       </div>
 
-      <div className="mt-10 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+      <div className={projectGridClass}>
         {projects.map((project) => (
           <ProjectCard key={project.slug} project={project} />
         ))}
