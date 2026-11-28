@@ -80,6 +80,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     .filter(Boolean);
   const details = [
     project.role ? { label: 'Role', value: project.role } : null,
+    project.location ? { label: 'Location', value: project.location } : null,
     project.status ? { label: 'Status', value: project.status } : null,
     project.year || project.date
       ? { label: project.year ? 'Year' : 'Date', value: project.year ?? project.date }
@@ -97,7 +98,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
           <div className="mt-7 grid gap-8 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:items-start lg:gap-12">
             <div className="max-w-2xl lg:pt-2">
-              <p className="section-kicker">Project case study</p>
+              <p className="section-kicker">{project.category ?? 'Project case study'}</p>
               <h1 className="mt-3 text-4xl font-bold leading-[1.06] tracking-[-0.04em] sm:text-5xl lg:text-[3.25rem]">
                 {project.title}
               </h1>
@@ -126,7 +127,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                     rel="noopener noreferrer"
                     className="btn-primary"
                   >
-                    Live demo <FiArrowUpRight aria-hidden="true" />
+                    Live <FiArrowUpRight aria-hidden="true" />
                   </a>
                 ) : null}
                 {project.githubUrl ? (

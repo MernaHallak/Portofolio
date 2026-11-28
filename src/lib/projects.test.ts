@@ -57,14 +57,35 @@ describe('project catalog', () => {
       'edujar',
       'products',
     ]);
-    expect(getProjects().map((project) => project.slug)).toEqual(['portfolio']);
-    expect(getFeaturedProjects().map((project) => project.slug)).toEqual(['portfolio']);
-    expect(getRelatedProjects('portfolio')).toEqual([]);
+    expect(getProjects().map((project) => project.slug)).toEqual(['schs', 'portfolio']);
+    expect(getFeaturedProjects().map((project) => project.slug)).toEqual(['schs', 'portfolio']);
+    expect(getRelatedProjects('schs').map((project) => project.slug)).toEqual(['portfolio']);
 
     archivedProjects.forEach((project) => {
       expect(getProjects()).not.toContainEqual(project);
       expect(getProjectBySlug(project.slug)).toBeUndefined();
       expect(project.legacyId && getProjectByLegacyId(project.legacyId)).toBeUndefined();
     });
+  });
+
+  it('includes SCHS as the first public project with its complete gallery', () => {
+    const schs = getProjectBySlug('schs');
+
+    expect(schs).toMatchObject({
+      title: 'SCHS',
+      role: 'Full-Stack Developer & UI/UX Designer',
+      liveUrl: 'https://schs-sy.com/',
+    });
+    expect(schs?.githubUrl).toBeUndefined();
+    expect(schs?.date).toBeUndefined();
+    expect(schs?.images?.map((image) => image.src)).toEqual([
+      '/images/projects/schs/schs-homepage.jpg',
+      '/images/projects/schs/schs-articles.png',
+      '/images/projects/schs/schs-article-detail.png',
+      '/images/projects/schs/schs-hearing-test.png',
+      '/images/projects/schs/schs-contact.png',
+      '/images/projects/schs/schs-admin-articles.png',
+      '/images/projects/schs/schs-admin-editor.png',
+    ]);
   });
 });

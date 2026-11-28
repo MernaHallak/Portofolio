@@ -8,6 +8,8 @@ export type Project = {
   slug: string;
   title: string;
   legacyId?: string;
+  category?: string;
+  location?: string;
   summary?: string;
   description?: string;
   overview?: string;
@@ -67,6 +69,77 @@ Key Features:
     archived: true,
   },
   {
+    slug: 'schs',
+    title: 'SCHS',
+    category: 'Healthcare / Full-Stack Web Application',
+    location: 'Damascus, Syria',
+    summary: 'Specialized Clinic for Hearing and Speech',
+    description:
+      'An Arabic-first healthcare platform built with Next.js, featuring hearing and speech services, educational articles, a secure PostgreSQL-powered CMS, and SEO-friendly localized routing.',
+    overview: `SCHS is a full-stack healthcare website developed for the Specialized Clinic for Hearing and Speech in Damascus, Syria.
+
+The platform provides an Arabic-first, fully responsive experience where visitors can explore hearing and speech services, discover diagnostic tests, read educational articles, and contact the clinic.
+
+Behind the public website is a custom administrative content management system built with Next.js, Prisma, and PostgreSQL. It enables secure article management, publishing workflows, image optimization, and content updates.
+
+The project also implements RTL support, localized Arabic routes, SEO metadata, server-side rendering, ISR, and responsive design.`,
+    role: 'Full-Stack Developer & UI/UX Designer',
+    status: 'Live',
+    tools: [
+      'Next.js',
+      'React',
+      'TypeScript',
+      'Tailwind CSS',
+      'PostgreSQL',
+      'Prisma',
+      'Framer Motion',
+      'Sharp',
+    ],
+    features: [
+      'Arabic-first RTL experience — Localized routes and responsive RTL layouts.',
+      'Custom content management system — Secure article creation, editing, publishing, and organization.',
+      'PostgreSQL and Prisma integration — Structured, database-backed article management.',
+      'Secure admin authentication — Password verification, signed cookies, and protected admin routes.',
+      'SEO and localized routing — Canonical Arabic URLs, metadata, sitemap, redirects, and article data.',
+      'Optimized media management — Sharp processing, WebP optimization, cover images, and galleries.',
+      'Performance and rendering — Server Components, ISR-backed article pages, and cache revalidation.',
+      'Responsive user experience — Mobile navigation, galleries, and subtle interface animations.',
+      'Patient communication — WhatsApp, telephone, embedded maps, and social channels.',
+    ],
+    images: [
+      {
+        src: '/images/projects/schs/schs-homepage.jpg',
+        alt: 'SCHS Arabic homepage for the Specialized Clinic for Hearing and Speech',
+      },
+      {
+        src: '/images/projects/schs/schs-articles.png',
+        alt: 'SCHS Arabic articles listing',
+      },
+      {
+        src: '/images/projects/schs/schs-article-detail.png',
+        alt: 'SCHS Arabic article detail page',
+      },
+      {
+        src: '/images/projects/schs/schs-hearing-test.png',
+        alt: 'SCHS hearing tests page',
+      },
+      {
+        src: '/images/projects/schs/schs-contact.png',
+        alt: 'SCHS contact page with an embedded Damascus map',
+      },
+      {
+        src: '/images/projects/schs/schs-admin-articles.png',
+        alt: 'SCHS administrative article management screen',
+      },
+      {
+        src: '/images/projects/schs/schs-admin-editor.png',
+        alt: 'SCHS administrative article editor',
+      },
+    ],
+    liveUrl: 'https://schs-sy.com/',
+    order: 1,
+  },
+  {
     slug: 'portfolio',
     legacyId: '3',
     title: 'Portfolio',
@@ -88,6 +161,7 @@ Key Features:
     ],
     liveUrl: 'merna-hallak-portfollio.vercel.app',
     githubUrl: 'https://github.com/MernaHallak',
+    order: 2,
   },
   {
     slug: 'products',

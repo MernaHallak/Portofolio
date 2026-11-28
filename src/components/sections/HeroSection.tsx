@@ -54,7 +54,7 @@ export function HeroSection() {
             <div className="absolute -inset-5 rounded-full bg-accentSoft blur-2xl" />
             <div className="relative rounded-full border border-strongLine bg-elevated p-2 shadow-lift">
               <Image
-                src="/images/profile/profile-image.png"
+                src="/images/profile/Original-1.5_blurred-enhanced.png"
                 alt="Portrait of Merna Hallak"
                 width={407}
                 height={408}

@@ -70,7 +70,7 @@ export function ProjectCard({ project }: { project: Project }) {
               rel="noopener noreferrer"
               className="inline-flex min-h-11 items-center gap-1.5 rounded-sm px-1 font-bold text-ink transition-colors hover:text-accent"
             >
-              Live demo <FiArrowUpRight aria-hidden="true" />
+              Live <FiArrowUpRight aria-hidden="true" />
             </a>
           ) : null}
           {project.githubUrl ? (
